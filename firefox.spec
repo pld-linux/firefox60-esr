@@ -1,47 +1,56 @@
-# NOTE: PLD distributes iceweasel instead
-#
 # TODO:
-# - (12:22:58)  patrys:  can you also move _libdir/mozilla-firefox to just _libdir/firefox?
-#   (12:23:25)  patrys:  it's not like we ship official firefox
-# - fix wrapper script to allow playing with profiles (must not use -remote)
+# - consider --enable-libproxy
 #
 # Conditional build:
 %bcond_with	tests		# enable tests (whatever they check)
 %bcond_with	gtk3		# GTK+ 3.x instead of 2.x
 %bcond_without	kerberos	# disable krb5 support
-%bcond_with	xulrunner	# system xulrunner [no longer supported]
-%bcond_with	shared_js	# shared libmozjs library
+%bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
+# - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
+%bcond_with	shared_js	# shared libmozjs library [broken]
 
-%if %{without xulrunner}
+# On updating version, grab CVE links from:
+# https://www.mozilla.org/security/known-vulnerabilities/firefox.html
+# Release Notes:
+# https://developer.mozilla.org/en-US/Firefox/Releases
+
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
-%endif
 
 %define		nspr_ver	4.10.8
-%define		nss_ver		3.18.1
+%define		nss_ver		3.19.2
 
-Summary:	Firefox Community Edition web browser
-Summary(pl.UTF-8):	Firefox Community Edition - przeglądarka WWW
-Name:		mozilla-firefox
-Version:	38.0.1
-Release:	1
+Summary:	Firefox web browser
+Summary(hu.UTF-8):	Firefox web böngésző
+Summary(pl.UTF-8):	Firefox - przeglądarka WWW
+Name:		firefox
+Version:	45.0
+Release:	0.1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
-Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.bz2
-# Source0-md5:	3c496e4ec072327b1ef2b820f15dff26
+Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
+# Source0-md5:	09cbada824841f9e1d77f095e7cd02c1
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
 Source6:	vendor-ac.js
-Patch0:		%{name}-branding.patch
-Patch7:		%{name}-prefs.patch
-Patch9:		%{name}-no-subshell.patch
-Patch11:	%{name}-middle_click_paste.patch
-Patch12:	%{name}-packaging.patch
-Patch13:	%{name}-system-virtualenv.patch
-Patch15:	%{name}-Disable-Firefox-Health-Report.patch
-URL:		http://www.mozilla.org/projects/firefox/
+Patch1:		idl-parser.patch
+Patch2:		xulrunner-new-libxul.patch
+Patch3:		xulrunner-paths.patch
+Patch4:		xulrunner-pc.patch
+Patch5:		install-pc-files.patch
+Patch6:		%{name}-prefs.patch
+Patch7:		%{name}-pld-bookmarks.patch
+Patch8:		%{name}-no-subshell.patch
+Patch9:		%{name}-middle_click_paste.patch
+Patch11:	%{name}-system-virtualenv.patch
+Patch12:	%{name}-Disable-Firefox-Health-Report.patch
+Patch14:	freetype.patch
+URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
+BuildRequires:	ImageMagick
+BuildRequires:	ImageMagick-coder-png
+BuildRequires:	ImageMagick-coder-svg
 BuildRequires:	alsa-lib-devel
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -66,10 +75,13 @@ BuildRequires:	libicu-devel >= 50.1
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
+# for rsvg-convert
+BuildRequires:	librsvg
 BuildRequires:	libpng(APNG)-devel >= 0.10
 BuildRequires:	libpng-devel >= 2:1.6.16
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libvpx-devel >= 1.3.0
+BuildRequires:	libxslt-progs >= 1.1.28
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
 BuildRequires:	pango-devel >= 1:1.22.0
@@ -79,29 +91,68 @@ BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig(libffi) >= 3.0.9
 BuildRequires:	pulseaudio-devel
 BuildRequires:	python-modules >= 1:2.5
+%{?with_pgo:BuildRequires:	python-modules-sqlite}
 BuildRequires:	python-simplejson
 BuildRequires:	python-virtualenv >= 1.9.1-4
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
-BuildRequires:	sqlite3-devel >= 3.8.9
+BuildRequires:	sed >= 4.0
+BuildRequires:	sqlite3-devel >= 3.8.11.1-3
 BuildRequires:	startup-notification-devel >= 0.8
+BuildRequires:	virtualenv
 BuildRequires:	xorg-lib-libXScrnSaver-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXt-devel
-%if %{with xulrunner}
-BuildRequires:	xulrunner-devel >= 2:%{version}
-%endif
+%{?with_pgo:BuildRequires:	xorg-xserver-Xvfb}
 BuildRequires:	zip
 BuildRequires:	zlib-devel >= 1.2.3
+BuildConflicts:	%{name}-devel < %{version}
 Requires(post):	mktemp >= 1.5-18
 Requires:	browser-plugins >= 2.0
 Requires:	desktop-file-utils
 Requires:	hicolor-icon-theme
-%if %{with xulrunner}
-%requires_eq_to	xulrunner xulrunner-devel
-%else
+Requires:	myspell-common
+Requires:	nspr >= 1:%{nspr_ver}
+Requires:	nss >= 1:%{nss_ver}
+Requires:	%{name}-libs = %{version}-%{release}
+Provides:	wwwbrowser
+Obsoletes:	iceweasel
+Obsoletes:	mozilla-firebird
+Obsoletes:	mozilla-firefox
+Obsoletes:	mozilla-firefox-lang-en < 2.0.0.8-3
+Obsoletes:	mozilla-firefox-libs
+Obsoletes:	xulrunner
+Obsoletes:	xulrunner-gnome
+Conflicts:	firefox-lang-resources < %{version}
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		filterout_cpp		-D_FORTIFY_SOURCE=[0-9]+
+
+# don't satisfy other packages
+%define		_noautoprovfiles	%{_libdir}/%{name}
+
+# and as we don't provide them, don't require either
+%define		_noautoreq	libmozjs.so libxul.so
+
+%description
+Firefox is an open-source web browser, designed for standards
+compliance, performance and portability.
+
+%description -l hu.UTF-8
+Firefox egy nyílt forrású webböngésző, hatékonyságra és
+hordozhatóságra tervezve.
+
+%description -l pl.UTF-8
+Firefox jest przeglądarką WWW rozpowszechnianą zgodnie z ideami
+ruchu otwartego oprogramowania oraz tworzoną z myślą o zgodności ze
+standardami, wydajnością i przenośnością.
+
+%package libs
+Summary:	Firefox shared libraries
+Summary(pl.UTF-8):	Biblioteki współdzielone Firefoxa
+Group:		X11/Libraries
 Requires:	cairo >= 1.10.2-5
 Requires:	dbus-glib >= 0.60
 Requires:	glib2 >= 1:2.22
@@ -111,54 +162,69 @@ Requires:	libjpeg-turbo
 Requires:	libpng >= 2:1.6.16
 Requires:	libpng(APNG) >= 0.10
 Requires:	libvpx >= 1.3.0
-Requires:	myspell-common
-Requires:	nspr >= 1:%{nspr_ver}
-Requires:	nss >= 1:%{nss_ver}
 Requires:	pango >= 1:1.22.0
 Requires:	sqlite3 >= %{sqlite_build_version}
 Requires:	startup-notification >= 0.8
-%endif
-Provides:	wwwbrowser
-Obsoletes:	mozilla-firebird
-Obsoletes:	mozilla-firefox-lang-en < 2.0.0.8-3
-Obsoletes:	mozilla-firefox-libs
-Conflicts:	mozilla-firefox-lang-resources < %{version}
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Provides:	xulrunner-libs = 2:%{version}-%{release}
+Obsoletes:	iceweasel-libs
+Obsoletes:	xulrunner-libs
 
-%define		filterout_cpp		-D_FORTIFY_SOURCE=[0-9]+
+%description libs
+XULRunner shared libraries.
 
-# don't satisfy other packages (don't use %{name} here)
-%define		_noautoprovfiles	%{_libdir}/mozilla-firefox
-%if %{without xulrunner}
-# and as we don't provide them, don't require either
-%define		_noautoreq	libmozalloc.so libmozjs.so libxul.so
-%endif
+%description libs -l pl.UTF-8
+Biblioteki współdzielone XULRunnera.
 
-%description
-Firefox Community Edition is an open-source web browser, designed for
-standards compliance, performance and portability.
+%package devel
+Summary:	Headers for developing programs that will use Firefox
+Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia programów używających Firefox
+Group:		X11/Development/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	nspr-devel >= 1:%{nspr_ver}
+Requires:	nss-devel >= 1:%{nss_ver}
+Requires:	python-ply
+Provides:	xulrunner-devel = 2:%{version}-%{release}
+Obsoletes:	iceweasel-devel
+Obsoletes:	mozilla-devel
+Obsoletes:	mozilla-firefox-devel
+Obsoletes:	seamonkey-devel
+Obsoletes:	xulrunner-devel
 
-%description -l pl.UTF-8
-Firefox Community Edition jest przeglądarką WWW rozpowszechnianą
-zgodnie z ideami ruchu otwartego oprogramowania oraz tworzoną z myślą
-o zgodności ze standardami, wydajnością i przenośnością.
+%description devel
+Firefox development package.
+
+%description devel -l pl.UTF-8
+Pakiet programistyczny Firefoxa.
 
 %prep
-%setup -qc
-mv -f mozilla-release mozilla
-cd mozilla
+%setup -q
 
-%patch0 -p1
+# avoid using included headers (-I. is before HUNSPELL_CFLAGS)
+%{__rm} extensions/spellcheck/hunspell/src/{*.hxx,hunspell.h}
+# hunspell needed for factory including mozHunspell.h
+echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Makefile.in
+
+%patch1 -p2
+%patch2 -p1
+%patch3 -p2
+%patch4 -p1
+%patch5 -p2
+%patch6 -p1
 %patch7 -p1
-%patch9 -p2
+%patch8 -p2
+#%patch9 -p2
 %patch11 -p2
 %patch12 -p1
-%patch13 -p2
-%patch15 -p1
+%patch14 -p2
+
+cp -a xulrunner/installer/*.pc.in browser/installer/
+
+%if %{with pgo}
+sed -i -e 's@__BROWSER_PATH__@"../../dist/bin/firefox-bin"@' build/automation.py.in
+%endif
 
 %build
-cd mozilla
-cp -pf %{_datadir}/automake/config.* build/autoconf
+cp -p %{_datadir}/automake/config.* build/autoconf
 
 cat << 'EOF' > .mozconfig
 . $topsrcdir/browser/config/mozconfig
@@ -190,7 +256,6 @@ ac_add_options --enable-crash-on-assert
 %else
 ac_add_options --disable-debug
 ac_add_options --disable-debug-modules
-ac_add_options --disable-logging
 ac_add_options --enable-optimize="%{rpmcflags} -Os"
 %endif
 ac_add_options --disable-strip
@@ -200,7 +265,11 @@ ac_add_options --disable-install-strip
 ac_add_options --enable-tests
 ac_add_options --enable-mochitest
 %else
+%if %{with pgo}
+ac_add_options --enable-tests
+%else
 ac_add_options --disable-tests
+%endif
 ac_add_options --disable-mochitest
 %endif
 ac_add_options --disable-cpp-exceptions
@@ -236,11 +305,9 @@ ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
 ac_add_options --enable-url-classifier
 ac_add_options --enable-xinerama
+ac_add_options --enable-official-branding
 ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
-%if %{with xulrunner}
-ac_add_options --with-libxul-sdk=$(pkg-config --variable=sdkdir libxul)
-%endif
 ac_add_options --with-pthreads
 ac_add_options --with-system-bz2
 ac_add_options --with-system-icu
@@ -255,66 +322,89 @@ ac_add_options --with-system-zlib
 ac_add_options --with-x
 EOF
 
+%if %{with pgo}
+D=$(( RANDOM % (200 - 100 + 1 ) + 5 ))
+/usr/bin/Xvfb :${D} &
+XVFB_PID=$!
+[ -n "$XVFB_PID" ] || exit 1
+export DISPLAY=:${D}
+%{__make} -j1 -f client.mk profiledbuild \
+	DESTDIR=obj-%{_target_cpu}/dist \
+	CC="%{__cc}" \
+	CXX="%{__cxx}" \
+	MOZ_MAKE_FLAGS="%{_smp_mflags}"
+kill $XVFB_PID
+%else
 %{__make} -j1 -f client.mk build \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
 	MOZ_MAKE_FLAGS="%{_smp_mflags}"
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-cd mozilla
 install -d \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_libdir}} \
 	$RPM_BUILD_ROOT%{_desktopdir} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}/browser \
-	$RPM_BUILD_ROOT%{_libdir}/%{name}/browser/plugins
+	$RPM_BUILD_ROOT%{_libdir}/%{name}/browser/plugins \
+	$RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/{lib,bin} \
+	$RPM_BUILD_ROOT%{_includedir}/%{name} \
+	$RPM_BUILD_ROOT%{_datadir}/idl/%{name} \
+	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %browser_plugins_add_browser %{name} -p %{_libdir}/%{name}/browser/plugins
 
-%{__make} -C obj-%{_target_cpu}/browser/installer stage-package \
+cd obj-%{_target_cpu}
+%{__make} -C browser/installer stage-package libxul.pc libxul-embedding.pc mozilla-js.pc mozilla-plugin.pc \
 	DESTDIR=$RPM_BUILD_ROOT \
 	installdir=%{_libdir}/%{name} \
+	INSTALL_SDK=1 \
 	PKG_SKIP_STRIP=1
 
-cp -a obj-%{_target_cpu}/dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
+cp -aL browser/installer/*.pc $RPM_BUILD_ROOT%{_pkgconfigdir}
+cp -aL dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
+cp -aL dist/idl/* $RPM_BUILD_ROOT%{_datadir}/idl/%{name}
+cp -aL dist/include/* $RPM_BUILD_ROOT%{_includedir}/%{name}
+cp -aL dist/include/xpcom-config.h $RPM_BUILD_ROOT%{_libdir}/%{name}-devel
+cp -aL dist/sdk/lib/* $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/lib
+cp -aL dist/sdk/bin/* $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/bin
+find $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk -name "*.pyc" | xargs rm -f
 
-%if %{with xulrunner}
-# >= 5.0 seems to require this
-ln -s ../xulrunner $RPM_BUILD_ROOT%{_libdir}/%{name}/xulrunner
-%endif
+ln -s %{_libdir}/%{name} $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/bin
+ln -s %{_includedir}/%{name} $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/include
+ln -s %{_datadir}/idl/%{name} $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/idl
+ln -s %{_libdir}/%{name}-devel/sdk/lib $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/lib
+
+# replace copies with symlinks
+%{?with_shared_js:ln -sf %{_libdir}/%{name}/libmozjs.so $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/lib/libmozjs.so}
+ln -sf %{_libdir}/%{name}/libxul.so $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/lib/libxul.so
+# temp fix for https://bugzilla.mozilla.org/show_bug.cgi?id=63955
+chmod a+rx $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/bin/xpt.py
 
 # move arch independant ones to datadir
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/icons $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/icons
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/searchplugins $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/searchplugins
-%if %{without xulrunner}
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}/defaults $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/{pref,preferences}
-%else
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/defaults $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults
-%endif
 
 ln -s ../../../share/%{name}/browser/chrome $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome
 ln -s ../../../share/%{name}/browser/defaults $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/defaults
 ln -s ../../../share/%{name}/browser/extensions $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions
 ln -s ../../../share/%{name}/browser/icons $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/icons
-ln -s ../../../share/%{name}/browser/searchplugins $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/searchplugins
 
-%if %{without xulrunner}
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/%{name}/dictionaries
 ln -s %{_datadir}/myspell $RPM_BUILD_ROOT%{_libdir}/%{name}/dictionaries
-%endif
 
-sed 's,@LIBDIR@,%{_libdir},' %{SOURCE4} > $RPM_BUILD_ROOT%{_bindir}/mozilla-firefox
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/mozilla-firefox
-ln -s mozilla-firefox $RPM_BUILD_ROOT%{_bindir}/firefox
+sed 's,@LIBDIR@,%{_libdir},' %{SOURCE4} > $RPM_BUILD_ROOT%{_bindir}/firefox
+chmod 755 $RPM_BUILD_ROOT%{_bindir}/firefox
 
 # install icons and desktop file
-for i in 48 64; do
+for i in 16 22 24 32 48 256; do
 	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
-	cp -a browser/branding/unofficial/content/icon${i}.png \
-		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/mozilla-firefox.png
+	cp -a ../browser/branding/official/default${i}.png \
+		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/firefox.png
 done
 
 cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
@@ -350,19 +440,6 @@ chmod 755 $RPM_BUILD_ROOT%{_sbindir}/%{name}-chrome+xpcom-generate
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pretrans
-if [ -d %{_libdir}/%{name}/browser/extensions ] && [ ! -L %{_libdir}/%{name}/browser/extensions ]; then
-	install -d %{_datadir}/%{name}/browser
-	if [ -e %{_datadir}/%{name}/browser/extensions ]; then
-		mv %{_datadir}/%{name}/browser/extensions{,.rpmsave}
-	fi
-	mv -v %{_libdir}/%{name}/browser/extensions %{_datadir}/%{name}/browser/extensions
-fi
-if [ -d %{_libdir}/%{name}/dictionaries ] && [ ! -L %{_libdir}/%{name}/dictionaries ]; then
-	mv -v %{_libdir}/%{name}/dictionaries{,.rpmsave}
-fi
-exit 0
-
 %post
 %{_sbindir}/%{name}-chrome+xpcom-generate
 %update_browser_plugins
@@ -378,20 +455,19 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/firefox
 %attr(755,root,root) %{_sbindir}/%{name}-chrome+xpcom-generate
 
-%{_desktopdir}/mozilla-firefox.desktop
-%{_iconsdir}/hicolor/*/apps/mozilla-firefox.png
+%{_desktopdir}/firefox.desktop
+%{_iconsdir}/hicolor/*/apps/firefox.png
 
 # browser plugins v2
 %{_browserpluginsconfdir}/browsers.d/%{name}.*
 %config(noreplace) %verify(not md5 mtime size) %{_browserpluginsconfdir}/blacklist.d/%{name}.*.blacklist
 
-%dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/browser
 %dir %{_libdir}/%{name}/browser/components
 %dir %{_libdir}/%{name}/browser/plugins
+%dir %{_libdir}/%{name}/browser/features
 
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/browser
@@ -399,16 +475,11 @@ fi
 %{_datadir}/%{name}/browser/chrome
 %{_datadir}/%{name}/browser/defaults
 %{_datadir}/%{name}/browser/icons
-%{_datadir}/%{name}/browser/searchplugins
 
 # symlinks
 %{_libdir}/%{name}/browser/extensions
 %{_libdir}/%{name}/browser/chrome
 %{_libdir}/%{name}/browser/icons
-%{_libdir}/%{name}/browser/searchplugins
-%if %{with xulrunner}
-%{_libdir}/%{name}/xulrunner
-%endif
 %{_libdir}/%{name}/browser/defaults
 
 %attr(755,root,root) %{_libdir}/%{name}/firefox
@@ -420,33 +491,59 @@ fi
 %{_libdir}/%{name}/browser/components/components.manifest
 %attr(755,root,root) %{_libdir}/%{name}/browser/components/libbrowsercomps.so
 # the signature of the default theme
-%{_datadir}/%{name}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
+%{_datadir}/%{name}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{_libdir}/%{name}/browser/omni.ja
 %{_libdir}/%{name}/webapprt
 %attr(755,root,root) %{_libdir}/%{name}/webapprt-stub
+
+%{_libdir}/%{name}/browser/features/loop@mozilla.org.xpi
 
 # files created by firefox -register
 %ghost %{_libdir}/%{name}/browser/components/compreg.dat
 %ghost %{_libdir}/%{name}/browser/components/xpti.dat
 
-%if %{without xulrunner}
-# private xulrunner instance
-%{_libdir}/%{name}/dependentlibs.list
-%{_libdir}/%{name}/platform.ini
-%dir %{_libdir}/%{name}/components
-%{_libdir}/%{name}/components/components.manifest
-%attr(755,root,root) %{_libdir}/%{name}/components/libdbusservice.so
-%attr(755,root,root) %{_libdir}/%{name}/components/libmozgnome.so
-%attr(755,root,root) %{_libdir}/%{name}/libmozalloc.so
-%{?with_shared_js:%attr(755,root,root) %{_libdir}/%{name}/libmozjs.so}
-%attr(755,root,root) %{_libdir}/%{name}/libxul.so
 %attr(755,root,root) %{_libdir}/%{name}/plugin-container
 %{_libdir}/%{name}/dictionaries
-%{_libdir}/%{name}/chrome.manifest
-%{_libdir}/%{name}/omni.ja
 
 %dir %{_libdir}/%{name}/gmp-clearkey
 %dir %{_libdir}/%{name}/gmp-clearkey/0.1
 %{_libdir}/%{name}/gmp-clearkey/0.1/clearkey.info
 %attr(755,root,root) %{_libdir}/%{name}/gmp-clearkey/0.1/libclearkey.so
-%endif
+
+%files libs
+%defattr(644,root,root,755)
+%dir %{_libdir}/%{name}
+%{_libdir}/%{name}/platform.ini
+%{?with_shared_js:%attr(755,root,root) %{_libdir}/%{name}/libmozjs.so}
+%attr(755,root,root) %{_libdir}/%{name}/liblgpllibs.so
+%attr(755,root,root) %{_libdir}/%{name}/libxul.so
+%{_libdir}/%{name}/dependentlibs.list
+%{_libdir}/%{name}/omni.ja
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/%{name}
+%{_datadir}/idl/%{name}
+%dir %{_libdir}/%{name}-devel
+%{_libdir}/%{name}-devel/bin
+%{_libdir}/%{name}-devel/idl
+%{_libdir}/%{name}-devel/lib
+%{_libdir}/%{name}-devel/include
+%{_libdir}/%{name}-devel/*.h
+%dir %{_libdir}/%{name}-devel/sdk
+%{_libdir}/%{name}-devel/sdk/lib
+%dir %{_libdir}/%{name}-devel/sdk/bin
+%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/header.py
+%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/run-mozilla.sh
+%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/typelib.py
+%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/xpcshell
+%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/xpidl.py
+%{_libdir}/%{name}-devel/sdk/bin/xpidllex.py
+%{_libdir}/%{name}-devel/sdk/bin/xpidlyacc.py
+%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/xpt.py
+%{_libdir}/%{name}-devel/sdk/bin/ply
+
+%{_pkgconfigdir}/libxul.pc
+%{_pkgconfigdir}/libxul-embedding.pc
+%{_pkgconfigdir}/mozilla-js.pc
+%{_pkgconfigdir}/mozilla-plugin.pc
