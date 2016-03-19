@@ -24,12 +24,12 @@ Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	45.0
+Version:	45.0.1
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	09cbada824841f9e1d77f095e7cd02c1
+# Source0-md5:	ea1e436b278b933747d9de167310592c
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
