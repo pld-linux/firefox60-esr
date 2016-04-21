@@ -17,8 +17,8 @@
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
-%define		nspr_ver	4.10.8
-%define		nss_ver		3.19.2
+%define		nspr_ver	4.12
+%define		nss_ver		3.21.1
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
@@ -78,7 +78,7 @@ BuildRequires:	libjpeg-turbo-devel
 # for rsvg-convert
 BuildRequires:	librsvg
 BuildRequires:	libpng(APNG)-devel >= 0.10
-BuildRequires:	libpng-devel >= 2:1.6.16
+BuildRequires:	libpng-devel >= 2:1.6.19
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libvpx-devel >= 1.3.0
 BuildRequires:	libxslt-progs >= 1.1.28
@@ -98,14 +98,21 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.8.11.1-3
+BuildRequires:	sqlite3-devel >= 3.9.1
 BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	virtualenv
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXScrnSaver-devel
+BuildRequires:	xorg-lib-libXcomposite-devel
+BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXt-devel
 %{?with_pgo:BuildRequires:	xorg-xserver-Xvfb}
+%ifarch %{x8664}
+BuildRequires:	yasm >= 1.0.1
+%endif
 BuildRequires:	zip
 BuildRequires:	zlib-devel >= 1.2.3
 BuildConflicts:	%{name}-devel < %{version}
@@ -159,7 +166,7 @@ Requires:	glib2 >= 1:2.22
 %{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
 Requires:	libjpeg-turbo
-Requires:	libpng >= 2:1.6.16
+Requires:	libpng >= 2:1.6.19
 Requires:	libpng(APNG) >= 0.10
 Requires:	libvpx >= 1.3.0
 Requires:	pango >= 1:1.22.0
