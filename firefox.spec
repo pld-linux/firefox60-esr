@@ -5,6 +5,7 @@
 %bcond_with	tests		# enable tests (whatever they check)
 %bcond_with	gtk3		# GTK+ 3.x instead of 2.x
 %bcond_without	kerberos	# disable krb5 support
+%bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
@@ -87,14 +88,13 @@ BuildRequires:	pulseaudio-devel
 BuildRequires:	python-modules >= 1:2.5
 %{?with_pgo:BuildRequires:	python-modules-sqlite}
 BuildRequires:	python-simplejson
-BuildRequires:	python-virtualenv >= 1.9.1-4
+BuildRequires:	python-virtualenv >= 15
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.9.1
 BuildRequires:	startup-notification-devel >= 0.8
-BuildRequires:	virtualenv
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXScrnSaver-devel
 BuildRequires:	xorg-lib-libXcomposite-devel
@@ -220,8 +220,10 @@ echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Mak
 
 cp -a xulrunner/installer/*.pc.in browser/installer/
 
+%{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
+
 %if %{with pgo}
-sed -i -e 's@__BROWSER_PATH__@"../../dist/bin/firefox-bin"@' build/automation.py.in
+%{__sed} -i -e 's@__BROWSER_PATH__@"../../dist/bin/firefox-bin"@' build/automation.py.in
 %endif
 
 %build
@@ -307,7 +309,7 @@ ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
 ac_add_options --enable-url-classifier
 ac_add_options --enable-xinerama
-ac_add_options --enable-official-branding
+%{?with_official:ac_add_options --enable-official-branding}
 ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
 ac_add_options --with-pthreads
@@ -403,9 +405,9 @@ sed 's,@LIBDIR@,%{_libdir},' %{SOURCE4} > $RPM_BUILD_ROOT%{_bindir}/firefox
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/firefox
 
 # install icons and desktop file
-for i in 16 22 24 32 48 256; do
+for i in 16 32 48 %{?with_official:22 24 256}; do
 	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
-	cp -a ../browser/branding/official/default${i}.png \
+	cp -a ../browser/branding/%{!?with_official:un}official/default${i}.png \
 		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/firefox.png
 done
 
