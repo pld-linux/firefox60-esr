@@ -48,9 +48,6 @@ Patch12:	%{name}-Disable-Firefox-Health-Report.patch
 Patch14:	freetype.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
-BuildRequires:	ImageMagick
-BuildRequires:	ImageMagick-coder-png
-BuildRequires:	ImageMagick-coder-svg
 BuildRequires:	alsa-lib-devel
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -75,13 +72,10 @@ BuildRequires:	libicu-devel >= 50.1
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
-# for rsvg-convert
-BuildRequires:	librsvg
 BuildRequires:	libpng(APNG)-devel >= 0.10
 BuildRequires:	libpng-devel >= 2:1.6.19
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libvpx-devel >= 1.3.0
-BuildRequires:	libxslt-progs >= 1.1.28
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
 BuildRequires:	pango-devel >= 1:1.22.0
