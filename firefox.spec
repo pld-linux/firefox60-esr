@@ -213,7 +213,7 @@ echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Mak
 %patch6 -p1
 %patch7 -p1
 %patch8 -p2
-#%patch9 -p2
+%patch9 -p1
 %patch11 -p2
 %patch12 -p1
 %patch14 -p2

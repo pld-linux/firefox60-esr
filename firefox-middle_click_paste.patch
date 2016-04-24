@@ -1,9 +1,10 @@
---- iceweasel-13.0/mozilla/browser/base/content/browser.js.orig	2012-06-06 11:12:17.021562264 +0200
-+++ iceweasel-13.0/mozilla/browser/base/content/browser.js	2012-06-06 11:21:37.000000000 +0200
-@@ -5110,12 +5110,9 @@ function middleMousePaste(event) {
+diff -ruNp firefox-45.0.2.orig/browser/base/content/browser.js firefox-45.0.2/browser/base/content/browser.js
+--- firefox-45.0.2.orig/browser/base/content/browser.js	2016-04-08 01:54:45.000000000 +0200
++++ firefox-45.0.2/browser/base/content/browser.js	2016-04-24 04:35:13.146499537 +0200
+@@ -5646,12 +5646,9 @@ function middleMousePaste(event) {
    }
  
-   getShortcutOrURIAndPostData(clipboard, data => {
+   getShortcutOrURIAndPostData(clipboard).then(data => {
 -    try {
 -      makeURI(data.url);
 -    } catch (ex) {
@@ -16,4 +17,3 @@
  
      try {
        addToUrlbarHistory(data.url);
-
