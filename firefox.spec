@@ -25,12 +25,12 @@ Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	45.0.2
+Version:	46.0
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	deda5fcd4a41fc63cb8c14102cb8c561
+# Source0-md5:	8a516da3858b17f55451810efc7a239a
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
@@ -259,7 +259,7 @@ ac_add_options --enable-crash-on-assert
 %else
 ac_add_options --disable-debug
 ac_add_options --disable-debug-modules
-ac_add_options --enable-optimize="%{rpmcflags} -Os"
+ac_add_options --enable-optimize="%{rpmcflags}"
 %endif
 ac_add_options --disable-strip
 ac_add_options --disable-strip-libs
@@ -278,7 +278,6 @@ ac_add_options --disable-mochitest
 ac_add_options --disable-cpp-exceptions
 ac_add_options --disable-crashreporter
 ac_add_options --disable-elf-dynstr-gc
-ac_add_options --disable-elf-hack
 ac_add_options --disable-gconf
 ac_add_options --disable-gnomeui
 ac_add_options --disable-gnomevfs
@@ -501,6 +500,8 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/webapprt-stub
 
 %{_libdir}/%{name}/browser/features/loop@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/e10srollout@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/firefox@getpocket.com.xpi
 
 # files created by firefox -register
 %ghost %{_libdir}/%{name}/browser/components/compreg.dat
@@ -521,6 +522,8 @@ fi
 %{?with_shared_js:%attr(755,root,root) %{_libdir}/%{name}/libmozjs.so}
 %attr(755,root,root) %{_libdir}/%{name}/liblgpllibs.so
 %attr(755,root,root) %{_libdir}/%{name}/libxul.so
+%attr(755,root,root) %{_libdir}/%{name}/libmozavcodec.so
+%attr(755,root,root) %{_libdir}/%{name}/libmozavutil.so
 %{_libdir}/%{name}/dependentlibs.list
 %{_libdir}/%{name}/omni.ja
 
