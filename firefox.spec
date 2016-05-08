@@ -3,7 +3,7 @@
 #
 # Conditional build:
 %bcond_with	tests		# enable tests (whatever they check)
-%bcond_with	gtk3		# GTK+ 3.x instead of 2.x
+%bcond_without	gtk3		# GTK+ 3.x instead of 2.x
 %bcond_without	kerberos	# disable krb5 support
 %bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
@@ -26,7 +26,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	46.0.1
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
@@ -526,6 +526,11 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/libmozavutil.so
 %{_libdir}/%{name}/dependentlibs.list
 %{_libdir}/%{name}/omni.ja
+%if %{with gtk3}
+%dir %{_libdir}/%{name}/gtk2
+%attr(755,root,root) %{_libdir}/%{name}/gtk2/libmozgtk.so
+%attr(755,root,root) %{_libdir}/%{name}/libmozgtk.so
+%endif
 
 %files devel
 %defattr(644,root,root,755)
