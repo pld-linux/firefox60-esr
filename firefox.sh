@@ -8,7 +8,7 @@ LIBDIR="@LIBDIR@/firefox"
 if [ ! -d $HOME/.mozilla/firefox ]; then
 	if [ -d $HOME/.iceweasel ]; then
 		echo "Copying profile from Iceweasel"
-		cp -rf $HOME/.iceweasek $HOME/.mozilla/firefox
+		cp -rf $HOME/.iceweasel $HOME/.mozilla/firefox
 	fi
 fi
 
