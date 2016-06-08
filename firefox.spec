@@ -25,32 +25,33 @@ Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	46.0.1
-Release:	5
+Version:	47.0
+Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	3e3b90268b8a634f7c60a25eb3a04c8c
+# Source0-md5:	0bd5991a6c821dd1a34ead0f8bbb301a
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
 Source6:	vendor-ac.js
-Patch1:		idl-parser.patch
-Patch2:		xulrunner-new-libxul.patch
-Patch3:		xulrunner-paths.patch
-Patch4:		xulrunner-pc.patch
-Patch5:		install-pc-files.patch
-Patch6:		%{name}-prefs.patch
-Patch7:		%{name}-pld-bookmarks.patch
-Patch8:		%{name}-no-subshell.patch
-Patch9:		%{name}-middle_click_paste.patch
-Patch11:	%{name}-system-virtualenv.patch
-Patch12:	%{name}-Disable-Firefox-Health-Report.patch
-Patch14:	freetype.patch
+Patch0:		idl-parser.patch
+Patch1:		xulrunner-new-libxul.patch
+Patch2:		xulrunner-paths.patch
+Patch3:		xulrunner-pc.patch
+Patch4:		%{name}-prefs.patch
+Patch5:		%{name}-pld-bookmarks.patch
+Patch6:		%{name}-no-subshell.patch
+Patch7:		%{name}-middle_click_paste.patch
+Patch8:		%{name}-system-virtualenv.patch
+Patch9:		%{name}-Disable-Firefox-Health-Report.patch
+Patch10:	freetype.patch
+Patch11:	firefox-gtk3-20.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	automake
+BuildRequires:	autoconf2_13
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10.2-5
 BuildRequires:	dbus-glib-devel >= 0.60
@@ -205,20 +206,18 @@ Pakiet programistyczny Firefoxa.
 # hunspell needed for factory including mozHunspell.h
 echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Makefile.in
 
-%patch1 -p2
-%patch2 -p1
-%patch3 -p2
+%patch0 -p2
+%patch1 -p1
+%patch2 -p2
+%patch3 -p1
 %patch4 -p1
-%patch5 -p2
-%patch6 -p1
+%patch5 -p1
+%patch6 -p2
 %patch7 -p1
 %patch8 -p2
 %patch9 -p1
-%patch11 -p2
-%patch12 -p1
-%patch14 -p2
-
-cp -a xulrunner/installer/*.pc.in browser/installer/
+%patch10 -p2
+%patch11 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
 
@@ -332,6 +331,7 @@ XVFB_PID=$!
 [ -n "$XVFB_PID" ] || exit 1
 export DISPLAY=:${D}
 %{__make} -j1 -f client.mk profiledbuild \
+	AUTOCONF=/usr/bin/autoconf2_13 \
 	DESTDIR=obj-%{_target_cpu}/dist \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
@@ -339,6 +339,7 @@ export DISPLAY=:${D}
 kill $XVFB_PID
 %else
 %{__make} -j1 -f client.mk build \
+	AUTOCONF=/usr/bin/autoconf2_13 \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
 	MOZ_MAKE_FLAGS="%{_smp_mflags}"
