@@ -52,17 +52,6 @@ diff -ur mozilla.orig/browser/app/profile/firefox.js mozilla/browser/app/profile
  
  // Work Offline is best manually managed by the user.
  pref("network.manage-offline-status", false);
-diff -ur mozilla.orig/browser/locales/en-US/chrome/overrides/netError.dtd mozilla/browser/locales/en-US/chrome/overrides/netError.dtd
---- mozilla.orig/browser/locales/en-US/chrome/overrides/netError.dtd	2008-06-21 12:55:30.000000000 +0200
-+++ mozilla/browser/locales/en-US/chrome/overrides/netError.dtd	2008-06-22 13:52:26.000000000 +0200
-@@ -175,6 +175,6 @@
- <!ENTITY securityOverride.warningContent "
- <p>You should not add an exception if you are using an internet connection that you do not trust completely or if you are not used to seeing a warning for this server.</p>
- 
--<button id='getMeOutOfHereButton'>&securityOverride.getMeOutOfHereButton;</button>
- <button id='exceptionDialogButton'>&securityOverride.exceptionButtonLabel;</button>
-+<button id='getMeOutOfHereButton'>&securityOverride.getMeOutOfHereButton;</button>
- ">
 --- a/modules/libpref/init/all.js
 +++ b/modules/libpref/init/all.js
 @@ -1510,7 +1510,7 @@ pref("layout.css.visited_links_enabled", true);
