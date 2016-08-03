@@ -234,21 +234,8 @@ cat << 'EOF' > .mozconfig
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-%{_target_cpu}
 
 # Options for 'configure' (same as command-line options).
-ac_add_options --build=%{_target_platform}
 ac_add_options --host=%{_target_platform}
 ac_add_options --prefix=%{_prefix}
-ac_add_options --exec-prefix=%{_exec_prefix}
-ac_add_options --bindir=%{_bindir}
-ac_add_options --sbindir=%{_sbindir}
-ac_add_options --sysconfdir=%{_sysconfdir}
-ac_add_options --datadir=%{_datadir}
-ac_add_options --includedir=%{_includedir}
-ac_add_options --libdir=%{_libdir}
-ac_add_options --libexecdir=%{_libexecdir}
-ac_add_options --localstatedir=%{_localstatedir}
-ac_add_options --sharedstatedir=%{_sharedstatedir}
-ac_add_options --mandir=%{_mandir}
-ac_add_options --infodir=%{_infodir}
 %if %{?debug:1}0
 ac_add_options --disable-optimize
 ac_add_options --enable-debug
@@ -257,11 +244,9 @@ ac_add_options --enable-debugger-info-modules
 ac_add_options --enable-crash-on-assert
 %else
 ac_add_options --disable-debug
-ac_add_options --disable-debug-modules
 ac_add_options --enable-optimize="%{rpmcflags} -Os"
 %endif
 ac_add_options --disable-strip
-ac_add_options --disable-strip-libs
 ac_add_options --disable-install-strip
 %if %{with tests}
 ac_add_options --enable-tests
@@ -272,41 +257,25 @@ ac_add_options --enable-tests
 %else
 ac_add_options --disable-tests
 %endif
-ac_add_options --disable-mochitest
 %endif
-ac_add_options --disable-cpp-exceptions
 ac_add_options --disable-crashreporter
-ac_add_options --disable-elf-dynstr-gc
 ac_add_options --disable-gconf
 ac_add_options --disable-gnomeui
-ac_add_options --disable-gnomevfs
-ac_add_options --disable-installer
-ac_add_options --disable-javaxpcom
-ac_add_options --disable-long-long-warning
 ac_add_options --disable-necko-wifi
-ac_add_options --disable-pedantic
 ac_add_options --disable-updater
-ac_add_options --disable-xterm-updates
-ac_add_options --enable-canvas
 ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
 ac_add_options --enable-extensions=default
 ac_add_options --enable-gio
-ac_add_options --enable-gstreamer=1.0
-ac_add_options --enable-libxul
-ac_add_options --enable-mathml
-ac_add_options --enable-pango
 ac_add_options --enable-readline
 ac_add_options --enable-safe-browsing
 %{?with_shared_js:ac_add_options --enable-shared-js}
 ac_add_options --enable-startup-notification
-ac_add_options --enable-svg
 ac_add_options --enable-system-cairo
 ac_add_options --enable-system-ffi
 ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
 ac_add_options --enable-url-classifier
-ac_add_options --enable-xinerama
 %{?with_official:ac_add_options --enable-official-branding}
 ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
@@ -318,7 +287,6 @@ ac_add_options --with-system-libevent
 ac_add_options --with-system-libvpx
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
-ac_add_options --with-system-ply
 ac_add_options --with-system-png
 ac_add_options --with-system-zlib
 ac_add_options --with-x
