@@ -26,7 +26,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	48.0
-Release:	0.1
+Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
@@ -301,15 +301,11 @@ export DISPLAY=:${D}
 %{__make} -j1 -f client.mk profiledbuild \
 	AUTOCONF=/usr/bin/autoconf2_13 \
 	DESTDIR=obj-%{_target_cpu}/dist \
-	CC="%{__cc}" \
-	CXX="%{__cxx}" \
 	MOZ_MAKE_FLAGS="%{_smp_mflags}"
 kill $XVFB_PID
 %else
 %{__make} -j1 -f client.mk build \
 	AUTOCONF=/usr/bin/autoconf2_13 \
-	CC="%{__cc}" \
-	CXX="%{__cxx}" \
 	MOZ_MAKE_FLAGS="%{_smp_mflags}"
 %endif
 
@@ -465,8 +461,6 @@ fi
 # the signature of the default theme
 %{_datadir}/%{name}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{_libdir}/%{name}/browser/omni.ja
-%{_libdir}/%{name}/webapprt
-%attr(755,root,root) %{_libdir}/%{name}/webapprt-stub
 
 %{_libdir}/%{name}/browser/features/loop@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/e10srollout@mozilla.org.xpi
