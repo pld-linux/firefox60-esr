@@ -11,20 +11,20 @@ diff -ur mozilla.orig/browser/app/profile/firefox.js mozilla/browser/app/profile
  // Dictionary download preference
  pref("browser.dictionaries.download.url", "https://addons.mozilla.org/%LOCALE%/firefox/dictionaries/");
 @@ -157,12 +157,12 @@
- pref("app.update.certs.2.commonName", "aus3.mozilla.org");
+ pref("app.update.cert.checkAttributes", false);
  
  // Whether or not app updates are enabled
 -pref("app.update.enabled", true);
 +pref("app.update.enabled", false);
  
- // This preference turns on app.update.mode and allows automatic download and
- // install to take place. We use a separate boolean toggle for this to make
- // the UI easier to construct.
+ // If set to true, the Update Service will automatically download updates when
+ // app updates are enabled per the app.update.enabled preference and if the user
+ // can apply updates.
 -pref("app.update.auto", true);
 +pref("app.update.auto", false);
  
- // Defines how the Application Update Service notifies the user about updates:
- //
+ // If set to true, the Update Service will present no UI for any event.
+ pref("app.update.silent", false);
 @@ -252,7 +252,7 @@
  pref("general.useragent.complexOverride.moodle", false); // bug 797703
  
