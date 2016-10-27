@@ -19,7 +19,7 @@
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
 %define		nspr_ver	4.12
-%define		nss_ver		3.21.1
+%define		nss_ver		3.25
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
@@ -54,6 +54,7 @@ BuildRequires:	autoconf2_13
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10.2-5
 BuildRequires:	dbus-glib-devel >= 0.60
+BuildRequires:	fontconfig-devel >= 1:2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
 BuildRequires:	gcc-c++ >= 6:4.4
 BuildRequires:	glib2-devel >= 1:2.22
@@ -74,9 +75,9 @@ BuildRequires:	libicu-devel >= 50.1
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng(APNG)-devel >= 0.10
-BuildRequires:	libpng-devel >= 2:1.6.19
+BuildRequires:	libpng-devel >= 2:1.6.21
 BuildRequires:	libstdc++-devel >= 6:4.4
-BuildRequires:	libvpx-devel >= 1.3.0
+BuildRequires:	libvpx-devel >= 1.5.0
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
 BuildRequires:	pango-devel >= 1:1.22.0
@@ -93,7 +94,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.9.1
+BuildRequires:	sqlite3-devel >= 3.13.0
 BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXScrnSaver-devel
@@ -156,13 +157,14 @@ Summary(pl.UTF-8):	Biblioteki współdzielone Firefoxa
 Group:		X11/Libraries
 Requires:	cairo >= 1.10.2-5
 Requires:	dbus-glib >= 0.60
+Requires:	fontconfig-libs >= 1:2.7.0
 Requires:	glib2 >= 1:2.22
 %{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
 Requires:	libjpeg-turbo
-Requires:	libpng >= 2:1.6.19
+Requires:	libpng >= 2:1.6.21
 Requires:	libpng(APNG) >= 0.10
-Requires:	libvpx >= 1.3.0
+Requires:	libvpx >= 1.5.0
 Requires:	pango >= 1:1.22.0
 Requires:	sqlite3 >= %{sqlite_build_version}
 Requires:	startup-notification >= 0.8
