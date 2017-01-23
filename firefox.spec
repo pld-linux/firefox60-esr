@@ -18,19 +18,19 @@
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
-%define		nspr_ver	4.12
-%define		nss_ver		3.26.2
+%define		nspr_ver	4.13.1
+%define		nss_ver		3.28.1
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	50.1.0
-Release:	2
+Version:	51.0
+Release:	0.1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	0f6a56cd8da8fa9deedfd61bcb43a65d
+# Source0-md5:	733e8503d2241ef44dad1911085b60db
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
@@ -46,7 +46,6 @@ Patch7:		%{name}-middle_click_paste.patch
 Patch8:		%{name}-system-virtualenv.patch
 Patch9:		%{name}-Disable-Firefox-Health-Report.patch
 Patch10:	freetype.patch
-Patch11:	%{name}-nss-http2.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
@@ -219,7 +218,6 @@ echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Mak
 %patch8 -p2
 %patch9 -p1
 %patch10 -p2
-%patch11 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
 
