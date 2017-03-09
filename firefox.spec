@@ -25,12 +25,12 @@ Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	51.0.1
-Release:	1
+Version:	52.0
+Release:	0.1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	05d8d655983d21d5059d5c886b2e6a9c
+# Source0-md5:	76cf84d46590f60f13b0b3dda65d19ae
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
@@ -70,7 +70,7 @@ BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libevent-devel >= 1.4.7
 # standalone libffi 3.0.9 or gcc's from 4.5(?)+
 BuildRequires:	libffi-devel >= 6:3.0.9
-BuildRequires:	libicu-devel >= 50.1
+BuildRequires:	libicu-devel >= 58.1
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
@@ -94,7 +94,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.13.0
+BuildRequires:	sqlite3-devel >= 3.17.0
 BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXScrnSaver-devel
@@ -384,10 +384,6 @@ cp -a %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/preferences
 cp -a %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/preferences/vendor.js
 %endif
 
-# files created by firefox -register
-touch $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/components/compreg.dat
-touch $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/components/xpti.dat
-
 cat << 'EOF' > $RPM_BUILD_ROOT%{_sbindir}/%{name}-chrome+xpcom-generate
 #!/bin/sh
 umask 022
@@ -433,7 +429,6 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_browserpluginsconfdir}/blacklist.d/%{name}.*.blacklist
 
 %dir %{_libdir}/%{name}/browser
-%dir %{_libdir}/%{name}/browser/components
 %dir %{_libdir}/%{name}/browser/plugins
 %dir %{_libdir}/%{name}/browser/features
 
@@ -454,10 +449,9 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/firefox-bin
 %attr(755,root,root) %{_libdir}/%{name}/run-mozilla.sh
 %{_libdir}/%{name}/application.ini
+%{_libdir}/%{name}/chrome.manifest
 %{_libdir}/%{name}/browser/blocklist.xml
 %{_libdir}/%{name}/browser/chrome.manifest
-%{_libdir}/%{name}/browser/components/components.manifest
-%attr(755,root,root) %{_libdir}/%{name}/browser/components/libbrowsercomps.so
 # the signature of the default theme
 %{_datadir}/%{name}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{_libdir}/%{name}/browser/omni.ja
@@ -466,10 +460,6 @@ fi
 %{_libdir}/%{name}/browser/features/e10srollout@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/firefox@getpocket.com.xpi
 %{_libdir}/%{name}/browser/features/webcompat@mozilla.org.xpi
-
-# files created by firefox -register
-%ghost %{_libdir}/%{name}/browser/components/compreg.dat
-%ghost %{_libdir}/%{name}/browser/components/xpti.dat
 
 %attr(755,root,root) %{_libdir}/%{name}/plugin-container
 %{_libdir}/%{name}/dictionaries
@@ -491,6 +481,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/libxul.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozavcodec.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozavutil.so
+%attr(755,root,root) %{_libdir}/%{name}/libmozsandbox.so
 %{_libdir}/%{name}/dependentlibs.list
 %{_libdir}/%{name}/omni.ja
 %if %{with gtk3}
