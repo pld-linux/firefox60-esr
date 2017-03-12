@@ -9,6 +9,7 @@
 %bcond_without	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
+%bcond_with	system_icu	# build with system ICU (disabled due to crashes with system icu 58.2)
 
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
@@ -26,7 +27,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	52.0
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
@@ -70,7 +71,7 @@ BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libevent-devel >= 1.4.7
 # standalone libffi 3.0.9 or gcc's from 4.5(?)+
 BuildRequires:	libffi-devel >= 6:3.0.9
-BuildRequires:	libicu-devel >= 58.1
+%{?with_system_icu:BuildRequires:	libicu-devel >= 58.1}
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
@@ -281,7 +282,7 @@ ac_add_options --with-default-mozilla-five-home=%{_libdir}/%{name}
 ac_add_options --with-distribution-id=org.pld-linux
 ac_add_options --with-pthreads
 ac_add_options --with-system-bz2
-ac_add_options --with-system-icu
+ac_add_options --with%{!?with_system_icu:out}-system-icu
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-libevent
 ac_add_options --with-system-libvpx
@@ -471,6 +472,7 @@ fi
 %dir %{_libdir}/%{name}/gmp-clearkey/0.1
 %{_libdir}/%{name}/gmp-clearkey/0.1/clearkey.info
 %attr(755,root,root) %{_libdir}/%{name}/gmp-clearkey/0.1/libclearkey.so
+%{!?with_system_icu:%{_libdir}/%{name}//icudt58l.dat}
 
 %files libs
 %defattr(644,root,root,755)
