@@ -76,7 +76,7 @@ BuildRequires:	libffi-devel >= 6:3.0.9
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng(APNG)-devel >= 0.10
-BuildRequires:	libpng-devel >= 2:1.6.23
+BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libvpx-devel >= 1.5.0
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
@@ -163,7 +163,7 @@ Requires:	glib2 >= 1:2.22
 %{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
 Requires:	libjpeg-turbo
-Requires:	libpng >= 2:1.6.23
+Requires:	libpng >= 2:1.6.25
 Requires:	libpng(APNG) >= 0.10
 Requires:	libvpx >= 1.5.0
 Requires:	pango >= 1:1.22.0
