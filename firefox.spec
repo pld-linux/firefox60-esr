@@ -27,7 +27,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	52.0
-Release:	2
+Release:	3
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
@@ -264,6 +264,7 @@ ac_add_options --disable-gconf
 ac_add_options --disable-gnomeui
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
+ac_add_options --enable-alsa
 ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
 ac_add_options --enable-extensions=default
