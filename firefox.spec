@@ -1,5 +1,6 @@
 # TODO:
 # - consider --enable-libproxy
+# - enable rust support
 #
 # Conditional build:
 %bcond_with	tests		# enable tests (whatever they check)
@@ -39,7 +40,6 @@ Source6:	vendor-ac.js
 Patch0:		idl-parser.patch
 Patch1:		xulrunner-new-libxul.patch
 Patch2:		xulrunner-paths.patch
-Patch3:		xulrunner-pc.patch
 Patch4:		%{name}-prefs.patch
 Patch5:		%{name}-pld-bookmarks.patch
 Patch6:		%{name}-no-subshell.patch
@@ -64,7 +64,7 @@ BuildRequires:	gstreamer-plugins-base-devel >= 1.0
 %{!?with_gtk3:BuildRequires:	gtk+2-devel >= 2:2.18.0}
 %{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.4.0}
 %{?with_kerberos:BuildRequires:	heimdal-devel >= 0.7.1}
-BuildRequires:	hunspell-devel >= 1.2.3
+BuildRequires:	hunspell-devel >= 1.6.1
 BuildRequires:	libIDL-devel >= 0.8.0
 # DECnet (dnprogs.spec), not dummy net (libdnet.spec)
 #BuildRequires:	libdnet-devel
@@ -114,20 +114,37 @@ BuildRequires:	zlib-devel >= 1.2.3
 BuildConflicts:	%{name}-devel < %{version}
 Requires(post):	mktemp >= 1.5-18
 Requires:	browser-plugins >= 2.0
+Requires:	cairo >= 1.10.2-5
+Requires:	dbus-glib >= 0.60
 Requires:	desktop-file-utils
+Requires:	fontconfig-libs >= 1:2.7.0
+Requires:	glib2 >= 1:2.22
+%{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
+%{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
 Requires:	hicolor-icon-theme
+Requires:	libjpeg-turbo
+Requires:	libpng >= 2:1.6.25
+Requires:	libpng(APNG) >= 0.10
+Requires:	libvpx >= 1.5.0
 Requires:	myspell-common
 Requires:	nspr >= 1:%{nspr_ver}
 Requires:	nss >= 1:%{nss_ver}
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	pango >= 1:1.22.0
+Requires:	sqlite3 >= %{sqlite_build_version}
+Requires:	startup-notification >= 0.8
+Provides:	xulrunner-libs = 2:%{version}-%{release}
 Provides:	wwwbrowser
+Obsoletes:	firefox-devel
+Obsoletes:	firefox-lib
 Obsoletes:	iceweasel
+Obsoletes:	iceweasel-libs
 Obsoletes:	mozilla-firebird
 Obsoletes:	mozilla-firefox
 Obsoletes:	mozilla-firefox-lang-en < 2.0.0.8-3
 Obsoletes:	mozilla-firefox-libs
 Obsoletes:	xulrunner
 Obsoletes:	xulrunner-gnome
+Obsoletes:	xulrunner-libs
 Conflicts:	firefox-lang-resources < %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -152,54 +169,6 @@ Firefox jest przeglądarką WWW rozpowszechnianą zgodnie z ideami
 ruchu otwartego oprogramowania oraz tworzoną z myślą o zgodności ze
 standardami, wydajnością i przenośnością.
 
-%package libs
-Summary:	Firefox shared libraries
-Summary(pl.UTF-8):	Biblioteki współdzielone Firefoxa
-Group:		X11/Libraries
-Requires:	cairo >= 1.10.2-5
-Requires:	dbus-glib >= 0.60
-Requires:	fontconfig-libs >= 1:2.7.0
-Requires:	glib2 >= 1:2.22
-%{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
-%{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
-Requires:	libjpeg-turbo
-Requires:	libpng >= 2:1.6.25
-Requires:	libpng(APNG) >= 0.10
-Requires:	libvpx >= 1.5.0
-Requires:	pango >= 1:1.22.0
-Requires:	sqlite3 >= %{sqlite_build_version}
-Requires:	startup-notification >= 0.8
-Provides:	xulrunner-libs = 2:%{version}-%{release}
-Obsoletes:	iceweasel-libs
-Obsoletes:	xulrunner-libs
-
-%description libs
-XULRunner shared libraries.
-
-%description libs -l pl.UTF-8
-Biblioteki współdzielone XULRunnera.
-
-%package devel
-Summary:	Headers for developing programs that will use Firefox
-Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia programów używających Firefox
-Group:		X11/Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
-Requires:	nspr-devel >= 1:%{nspr_ver}
-Requires:	nss-devel >= 1:%{nss_ver}
-Requires:	python-ply
-Provides:	xulrunner-devel = 2:%{version}-%{release}
-Obsoletes:	iceweasel-devel
-Obsoletes:	mozilla-devel
-Obsoletes:	mozilla-firefox-devel
-Obsoletes:	seamonkey-devel
-Obsoletes:	xulrunner-devel
-
-%description devel
-Firefox development package.
-
-%description devel -l pl.UTF-8
-Pakiet programistyczny Firefoxa.
-
 %prep
 %setup -q
 
@@ -211,7 +180,6 @@ echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Mak
 %patch0 -p2
 %patch1 -p1
 %patch2 -p2
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
@@ -319,39 +287,18 @@ install -d \
 	$RPM_BUILD_ROOT%{_desktopdir} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}/browser \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}/browser/plugins \
-	$RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/{lib,bin} \
 	$RPM_BUILD_ROOT%{_includedir}/%{name} \
-	$RPM_BUILD_ROOT%{_datadir}/idl/%{name} \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %browser_plugins_add_browser %{name} -p %{_libdir}/%{name}/browser/plugins
 
 cd obj-%{_target_cpu}
-%{__make} -C browser/installer stage-package libxul.pc libxul-embedding.pc mozilla-js.pc mozilla-plugin.pc \
+%{__make} -C browser/installer stage-package \
 	DESTDIR=$RPM_BUILD_ROOT \
 	installdir=%{_libdir}/%{name} \
-	INSTALL_SDK=1 \
 	PKG_SKIP_STRIP=1
 
-cp -aL browser/installer/*.pc $RPM_BUILD_ROOT%{_pkgconfigdir}
 cp -aL dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
-cp -aL dist/idl/* $RPM_BUILD_ROOT%{_datadir}/idl/%{name}
-cp -aL dist/include/* $RPM_BUILD_ROOT%{_includedir}/%{name}
-cp -aL dist/include/xpcom-config.h $RPM_BUILD_ROOT%{_libdir}/%{name}-devel
-cp -aL dist/sdk/lib/* $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/lib
-cp -aL dist/sdk/bin/* $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/bin
-find $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk -name "*.pyc" | xargs rm -f
-
-ln -s %{_libdir}/%{name} $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/bin
-ln -s %{_includedir}/%{name} $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/include
-ln -s %{_datadir}/idl/%{name} $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/idl
-ln -s %{_libdir}/%{name}-devel/sdk/lib $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/lib
-
-# replace copies with symlinks
-%{?with_shared_js:ln -sf %{_libdir}/%{name}/libmozjs.so $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/lib/libmozjs.so}
-ln -sf %{_libdir}/%{name}/libxul.so $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/lib/libxul.so
-# temp fix for https://bugzilla.mozilla.org/show_bug.cgi?id=63955
-chmod a+rx $RPM_BUILD_ROOT%{_libdir}/%{name}-devel/sdk/bin/xpt.py
 
 # move arch independant ones to datadir
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
@@ -472,12 +419,10 @@ fi
 
 %dir %{_libdir}/%{name}/gmp-clearkey
 %dir %{_libdir}/%{name}/gmp-clearkey/0.1
-%{_libdir}/%{name}/gmp-clearkey/0.1/clearkey.info
+%{_libdir}/%{name}/gmp-clearkey/0.1/manifest.json
 %attr(755,root,root) %{_libdir}/%{name}/gmp-clearkey/0.1/libclearkey.so
-%{!?with_system_icu:%{_libdir}/%{name}//icudt58l.dat}
+%{!?with_system_icu:%{_libdir}/%{name}/icudt58l.dat}
 
-%files libs
-%defattr(644,root,root,755)
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/platform.ini
 %{?with_shared_js:%attr(755,root,root) %{_libdir}/%{name}/libmozjs.so}
@@ -493,31 +438,3 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/gtk2/libmozgtk.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozgtk.so
 %endif
-
-%files devel
-%defattr(644,root,root,755)
-%{_includedir}/%{name}
-%{_datadir}/idl/%{name}
-%dir %{_libdir}/%{name}-devel
-%{_libdir}/%{name}-devel/bin
-%{_libdir}/%{name}-devel/idl
-%{_libdir}/%{name}-devel/lib
-%{_libdir}/%{name}-devel/include
-%{_libdir}/%{name}-devel/*.h
-%dir %{_libdir}/%{name}-devel/sdk
-%{_libdir}/%{name}-devel/sdk/lib
-%dir %{_libdir}/%{name}-devel/sdk/bin
-%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/header.py
-%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/run-mozilla.sh
-%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/typelib.py
-%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/xpcshell
-%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/xpidl.py
-%{_libdir}/%{name}-devel/sdk/bin/xpidllex.py
-%{_libdir}/%{name}-devel/sdk/bin/xpidlyacc.py
-%attr(755,root,root) %{_libdir}/%{name}-devel/sdk/bin/xpt.py
-%{_libdir}/%{name}-devel/sdk/bin/ply
-
-%{_pkgconfigdir}/libxul.pc
-%{_pkgconfigdir}/libxul-embedding.pc
-%{_pkgconfigdir}/mozilla-js.pc
-%{_pkgconfigdir}/mozilla-plugin.pc
