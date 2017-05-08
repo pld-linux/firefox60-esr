@@ -28,7 +28,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	53.0
-Release:	2
+Release:	3
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
@@ -135,7 +135,7 @@ Requires:	startup-notification >= 0.8
 Provides:	xulrunner-libs = 2:%{version}-%{release}
 Provides:	wwwbrowser
 Obsoletes:	firefox-devel
-Obsoletes:	firefox-lib
+Obsoletes:	firefox-libs
 Obsoletes:	iceweasel
 Obsoletes:	iceweasel-libs
 Obsoletes:	mozilla-firebird
