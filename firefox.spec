@@ -10,7 +10,7 @@
 %bcond_without	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
-%bcond_with	system_icu	# build with system ICU (disabled due to crashes with system icu 58.2)
+%bcond_with	system_icu	# build with system ICU (disabled due to firefox 52 crashes with system icu 58.2 - testcase?)
 
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
@@ -21,18 +21,18 @@
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
 %define		nspr_ver	4.13.1
-%define		nss_ver		3.28.1
+%define		nss_ver		3.29.5
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	53.0
-Release:	3
+Version:	53.0.2
+Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	73175f850d4ff6068c6af674df20477c
+# Source0-md5:	bf4643f9a95f13adf8336532490ea3d2
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
@@ -76,7 +76,7 @@ BuildRequires:	libffi-devel >= 6:3.0.9
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
 BuildRequires:	libpng(APNG)-devel >= 0.10
-BuildRequires:	libpng-devel >= 2:1.6.25
+BuildRequires:	libpng-devel >= 2:1.6.28
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libvpx-devel >= 1.5.0
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
@@ -123,7 +123,7 @@ Requires:	glib2 >= 1:2.22
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
 Requires:	hicolor-icon-theme
 Requires:	libjpeg-turbo
-Requires:	libpng >= 2:1.6.25
+Requires:	libpng >= 2:1.6.28
 Requires:	libpng(APNG) >= 0.10
 Requires:	libvpx >= 1.5.0
 Requires:	myspell-common
@@ -154,7 +154,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
 # and as we don't provide them, don't require either
-%define		_noautoreq	libmozjs.so libxul.so
+%define		_noautoreq	liblgpllibs.so libmozavcodec.so libmozavutil.so libmozgtk.so libmozjs.so libmozsandbox.so libxul.so
 
 %description
 Firefox is an open-source web browser, designed for standards
