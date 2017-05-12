@@ -10,7 +10,7 @@
 %bcond_without	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
-%bcond_with	system_icu	# build with system ICU (disabled due to firefox 52 crashes with system icu 58.2 - testcase?)
+%bcond_without	system_icu	# build without system ICU
 
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
