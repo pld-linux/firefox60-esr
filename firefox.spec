@@ -1,6 +1,5 @@
 # TODO:
 # - consider --enable-libproxy
-# - enable rust support
 #
 # Conditional build:
 %bcond_with	tests		# enable tests (whatever they check)
@@ -232,7 +231,6 @@ ac_add_options --disable-gconf
 ac_add_options --disable-gnomeui
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
-ac_add_options --disable-rust
 ac_add_options --enable-alsa
 ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
