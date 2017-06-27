@@ -53,6 +53,7 @@ BuildRequires:	automake
 BuildRequires:	autoconf2_13
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10.2-5
+BuildRequires:	cargo
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	fontconfig-devel >= 1:2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
@@ -93,6 +94,7 @@ BuildRequires:	python-virtualenv >= 15
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
+BuildRequires:	rust
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.17.0
 BuildRequires:	startup-notification-devel >= 0.8
@@ -395,6 +397,7 @@ fi
 
 %attr(755,root,root) %{_libdir}/%{name}/firefox
 %attr(755,root,root) %{_libdir}/%{name}/firefox-bin
+%attr(755,root,root) %{_libdir}/%{name}/pingsender
 %attr(755,root,root) %{_libdir}/%{name}/run-mozilla.sh
 %{_libdir}/%{name}/application.ini
 %{_libdir}/%{name}/chrome.manifest
@@ -408,6 +411,7 @@ fi
 %{_libdir}/%{name}/browser/features/e10srollout@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/firefox@getpocket.com.xpi
 %{_libdir}/%{name}/browser/features/webcompat@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/screenshots@mozilla.org.xpi
 
 %attr(755,root,root) %{_libdir}/%{name}/plugin-container
 %{_libdir}/%{name}/dictionaries
