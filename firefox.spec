@@ -202,7 +202,7 @@ cat << 'EOF' > .mozconfig
 . $topsrcdir/browser/config/mozconfig
 
 export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
-export CXXFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
+export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-%{_target_cpu}
 
