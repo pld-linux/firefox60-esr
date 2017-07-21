@@ -19,8 +19,8 @@
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
-%define		nspr_ver	4.13.1
-%define		nss_ver		3.29.5
+%define		nspr_ver	4.14
+%define		nss_ver		3.30.2
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
@@ -170,6 +170,20 @@ Firefox jest przeglądarką WWW rozpowszechnianą zgodnie z ideami
 ruchu otwartego oprogramowania oraz tworzoną z myślą o zgodności ze
 standardami, wydajnością i przenośnością.
 
+%package -n gmp-api
+Summary:	GeckoMediaPlugins API header files
+Summary(pl.UTF-8):	Pliki nagłówkowe API GeckoMediaPlugins
+Group:		Development/Libraries
+URL:		https://wiki.mozilla.org/GeckoMediaPlugins
+# actually C++ compiler; STL is not even used
+Requires:	libstdc++-devel
+
+%description -n gmp-api
+GeckoMediaPlugins API header files.
+
+%description -n gmp-api -l pl.UTF-8
+Pliki nagłówkowe API GeckoMediaPlugins.
+
 %prep
 %setup -q
 
@@ -295,20 +309,20 @@ install -d \
 
 %browser_plugins_add_browser %{name} -p %{_libdir}/%{name}/browser/plugins
 
-cd obj-%{_target_cpu}
-%{__make} -C browser/installer stage-package \
+OBJDIR=obj-%{_target_cpu}
+%{__make} -C ${OBJDIR}/browser/installer stage-package \
 	DESTDIR=$RPM_BUILD_ROOT \
 	installdir=%{_libdir}/%{name} \
 	PKG_SKIP_STRIP=1
 
-cp -aL dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
+cp -aL ${OBJDIR}/dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
 
 # move arch independant ones to datadir
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/icons $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/icons
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}/defaults $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults
-mv $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/{pref,preferences}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/icons $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/icons
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/defaults $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/{pref,preferences}
 
 ln -s ../../../share/%{name}/browser/chrome $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome
 ln -s ../../../share/%{name}/browser/defaults $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/defaults
@@ -324,7 +338,7 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/firefox
 # install icons and desktop file
 for i in 16 32 48 %{?with_official:22 24 256}; do
 	install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
-	cp -a ../browser/branding/%{!?with_official:un}official/default${i}.png \
+	cp -a browser/branding/%{!?with_official:un}official/default${i}.png \
 		$RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/firefox.png
 done
 
@@ -353,6 +367,10 @@ unset TMPDIR TMP || :
 rm -rf $HOME
 EOF
 chmod 755 $RPM_BUILD_ROOT%{_sbindir}/%{name}-chrome+xpcom-generate
+
+# GeckoMediaPlugin API headers
+install -d $RPM_BUILD_ROOT%{_includedir}
+cp -pr dom/media/gmp/gmp-api $RPM_BUILD_ROOT%{_includedir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -443,3 +461,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/gtk2/libmozgtk.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozgtk.so
 %endif
+
+%files -n gmp-api
+%defattr(644,root,root,755)
+%{_includedir}/gmp-api
