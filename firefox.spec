@@ -26,18 +26,17 @@ Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	54.0.1
+Version:	55.0.1
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 Source0:	http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	bb6cc95056feba6acc487d773bc13e71
+# Source0-md5:	53debc4c7edfaf84b42f040872771d9d
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
 Source6:	vendor-ac.js
 Patch0:		idl-parser.patch
-Patch1:		xulrunner-new-libxul.patch
 Patch2:		xulrunner-paths.patch
 Patch4:		%{name}-prefs.patch
 Patch5:		%{name}-pld-bookmarks.patch
@@ -193,7 +192,6 @@ Pliki nagłówkowe API GeckoMediaPlugins.
 echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Makefile.in
 
 %patch0 -p2
-%patch1 -p1
 %patch2 -p2
 %patch4 -p1
 %patch5 -p1
@@ -247,14 +245,12 @@ ac_add_options --disable-tests
 %endif
 ac_add_options --disable-crashreporter
 ac_add_options --disable-gconf
-ac_add_options --disable-gnomeui
 ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
 ac_add_options --enable-alsa
 ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
 ac_add_options --enable-extensions=default
-ac_add_options --enable-gio
 ac_add_options --enable-readline
 ac_add_options --enable-safe-browsing
 %{?with_shared_js:ac_add_options --enable-shared-js}
@@ -429,10 +425,13 @@ fi
 %{_libdir}/%{name}/browser/omni.ja
 
 %{_libdir}/%{name}/browser/features/aushelper@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/clicktoplay-rollout@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/e10srollout@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/firefox@getpocket.com.xpi
-%{_libdir}/%{name}/browser/features/webcompat@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/followonsearch@mozilla.com.xpi
 %{_libdir}/%{name}/browser/features/screenshots@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/shield-recipe-client@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/webcompat@mozilla.org.xpi
 
 %attr(755,root,root) %{_libdir}/%{name}/plugin-container
 %{_libdir}/%{name}/dictionaries

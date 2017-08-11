@@ -1,22 +1,25 @@
 diff -ur mozilla.orig/browser/app/profile/firefox.js mozilla/browser/app/profile/firefox.js
 --- mozilla.orig/browser/app/profile/firefox.js	2008-06-21 12:55:30.000000000 +0200
 +++ mozilla/browser/app/profile/firefox.js	2008-06-21 15:25:48.000000000 +0200
-@@ -94,7 +94,7 @@ pref("extensions.hotfix.certs.1.sha1Fingerprint", "F1:DB:F9:6A:7B:B8:04:FA:48:3C
+@@ -65,7 +65,7 @@ pref("extensions.hotfix.certs.1.sha1Fingerprint", "F1:DB:F9:6A:7B:B8:04:FA:48:3C
  
  // Disable add-ons that are not installed by the user in all scopes by default.
  // See the SCOPE constants in AddonManager.jsm for values to use here.
 -pref("extensions.autoDisableScopes", 15);
 +pref("extensions.autoDisableScopes", 3);
+ // Scopes to scan for changes at startup.
+ pref("extensions.startupScanScopes", 0);
  
- // Dictionary download preference
- pref("browser.dictionaries.download.url", "https://addons.mozilla.org/%LOCALE%/firefox/dictionaries/");
-@@ -157,12 +157,12 @@
- pref("app.update.cert.checkAttributes", false);
+@@ -130,7 +130,7 @@
+ pref("app.update.backgroundMaxErrors", 10);
  
  // Whether or not app updates are enabled
 -pref("app.update.enabled", true);
 +pref("app.update.enabled", false);
  
+ // Whether or not to use the doorhanger application update UI.
+ pref("app.update.doorhanger", true);
+@@ -150,7 +150,7 @@
  // If set to true, the Update Service will automatically download updates when
  // app updates are enabled per the app.update.enabled preference and if the user
  // can apply updates.
@@ -25,33 +28,33 @@ diff -ur mozilla.orig/browser/app/profile/firefox.js mozilla/browser/app/profile
  
  // If set to true, the Update Service will present no UI for any event.
  pref("app.update.silent", false);
-@@ -252,7 +252,7 @@
- pref("general.useragent.complexOverride.moodle", false); // bug 797703
+@@ -242,7 +242,7 @@
+ pref("browser.uidensity", 0);
  
  // At startup, check if we're the default browser and prompt user if not.
 -pref("browser.shell.checkDefaultBrowser", true);
 +pref("browser.shell.checkDefaultBrowser", false);
  pref("browser.shell.shortcutFavicons",true);
+ pref("browser.shell.mostRecentDateSetAsDefault", "");
+ pref("browser.shell.skipDefaultBrowserCheckOnFirstRun", true);
+@@ -494,6 +494,8 @@
  
- // 0 = blank, 1 = home (browser.startup.homepage), 2 = last visited page, 3 = resume previous browser session
-@@ -448,6 +448,8 @@
- //  0: no backups created (and deletes all existing backups)
- pref("browser.bookmarks.max_backups",             10);
+ pref("browser.bookmarks.showRecentlyBookmarked",  true);
  
 +pref("intl.locale.matchOS", true);
 +
  // Scripts & Windows prefs
  pref("dom.disable_open_during_load",              true);
  pref("javascript.options.showInConsole",          true);
-@@ -574,7 +576,7 @@
- pref("alerts.totalOpenTime", 4000);
+@@ -629,7 +629,7 @@
+ pref("mousewheel.with_win.action", 1);
  
  pref("browser.xul.error_pages.enabled", true);
 -pref("browser.xul.error_pages.expert_bad_cert", false);
 +pref("browser.xul.error_pages.expert_bad_cert", true);
  
- // Work Offline is best manually managed by the user.
- pref("network.manage-offline-status", false);
+ // Enable captive portal detection.
+ pref("network.captive-portal-service.enabled", true);
 --- a/modules/libpref/init/all.js
 +++ b/modules/libpref/init/all.js
 @@ -1510,7 +1510,7 @@ pref("layout.css.visited_links_enabled", true);
