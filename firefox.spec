@@ -213,6 +213,8 @@ cp -p %{_datadir}/automake/config.* build/autoconf
 cat << 'EOF' > .mozconfig
 . $topsrcdir/browser/config/mozconfig
 
+export CC="%{__cc}"
+export CXX="%{__cxx}"
 export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 
