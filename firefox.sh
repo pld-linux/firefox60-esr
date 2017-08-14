@@ -32,7 +32,7 @@ else
 	else
 		URL="$1"
 	fi
-	if ! grep -q browser.tabs.opentabfor.middleclick.*false ~/.firefox/*/prefs.js; then
+	if ! grep -q browser.tabs.opentabfor.middleclick.*false ~/.mozilla/firefox/*/prefs.js; then
 		exec $FIREFOX -new-tab "$URL"
 	else
 		exec $FIREFOX -new-window "$URL"
