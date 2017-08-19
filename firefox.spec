@@ -66,6 +66,7 @@ BuildRequires:	gstreamer-plugins-base-devel >= 1.0
 %{?with_kerberos:BuildRequires:	heimdal-devel >= 0.7.1}
 BuildRequires:	hunspell-devel >= 1.6.1
 BuildRequires:	libIDL-devel >= 0.8.0
+BuildRequires:	libatomic-devel
 # DECnet (dnprogs.spec), not dummy net (libdnet.spec)
 #BuildRequires:	libdnet-devel
 BuildRequires:	libevent-devel >= 1.4.7
