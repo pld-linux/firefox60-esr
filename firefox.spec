@@ -151,6 +151,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		filterout_cpp		-D_FORTIFY_SOURCE=[0-9]+
 
+%if %{with clang}
+%define		filterout_cpp		-fvar-tracking-assignments
+%endif
+
 # don't satisfy other packages
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
@@ -220,9 +224,9 @@ export CXX="clang++"
 %else
 export CC="%{__cc}"
 export CXX="%{__cxx}"
+%endif
 export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
-%endif
 
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-%{_target_cpu}
 
