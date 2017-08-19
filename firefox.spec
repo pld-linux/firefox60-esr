@@ -152,7 +152,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		filterout_cpp		-D_FORTIFY_SOURCE=[0-9]+
 
 %if %{with clang}
-%define		filterout_cpp		-fvar-tracking-assignments
+%define		filterout		-fvar-tracking-assignments
 %endif
 
 # don't satisfy other packages
