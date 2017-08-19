@@ -10,6 +10,7 @@
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
+%bcond_with	clang		# build using Clang/LLVM
 
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
@@ -213,8 +214,13 @@ cp -p %{_datadir}/automake/config.* build/autoconf
 cat << 'EOF' > .mozconfig
 . $topsrcdir/browser/config/mozconfig
 
+%if %{with clang}
+export CC="clang"
+export CXX="clang++"
+%else
 export CC="%{__cc}"
 export CXX="%{__cxx}"
+%endif
 export CFLAGS="%{rpmcflags} -D_FILE_OFFSET_BITS=64"
 export CXXFLAGS="%{rpmcxxflags} -D_FILE_OFFSET_BITS=64"
 
