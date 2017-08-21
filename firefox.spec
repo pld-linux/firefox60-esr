@@ -49,15 +49,16 @@ Patch10:	freetype.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
-BuildRequires:	automake
 BuildRequires:	autoconf2_13
+BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.10.2-5
 BuildRequires:	cargo
+%{?with_clang:BuildRequires:	clang}
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	fontconfig-devel >= 1:2.7.0
 BuildRequires:	freetype-devel >= 1:2.1.8
-BuildRequires:	gcc-c++ >= 6:4.4
+%{!?with_clang:BuildRequires:	gcc-c++ >= 6:4.4}
 BuildRequires:	glib2-devel >= 1:2.22
 BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gstreamer-plugins-base-devel >= 1.0
