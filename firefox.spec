@@ -155,6 +155,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %if %{with clang}
 %define		filterout		-fvar-tracking-assignments
+%else
+%define		filterout		-Werror=format-security
 %endif
 
 # don't satisfy other packages
