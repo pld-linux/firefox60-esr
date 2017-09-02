@@ -1,5 +1,6 @@
 # TODO:
 # - consider --enable-libproxy
+# - do something with *.rdf file, there if file conflict with other lang packages
 #
 # Conditional build:
 %bcond_with	tests		# enable tests (whatever they check)
@@ -16,6 +17,14 @@
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
 # Release Notes:
 # https://developer.mozilla.org/en-US/Firefox/Releases
+# UPDATING TRANSLATIONS:
+%if 0
+rm -vf *.xpi
+../builder -g firefox-languages.spec
+V=53.0
+U=http://releases.mozilla.org/pub/firefox/releases/$V/linux-i686/
+curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
+%endif
 
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
@@ -37,6 +46,194 @@ Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
 Source6:	vendor-ac.js
+Source100:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ach.xpi
+# Source100-md5:	986868fca8707d7e9b99826cf5f3b944
+Source101:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/af.xpi
+# Source101-md5:	5fa53cd0a178690b88471260e9b393c4
+Source102:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/an.xpi
+# Source102-md5:	57dfc57b5492a520464822fe743d558c
+Source103:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ar.xpi
+# Source103-md5:	522b342f2046460453f0eb655c63df89
+Source104:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/as.xpi
+# Source104-md5:	48cb8d8fac1675699be7a386290a1d0d
+Source105:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ast.xpi
+# Source105-md5:	007db115930491f1ff96a27b11ed2629
+Source106:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/az.xpi
+# Source106-md5:	1cdbdcecee014bd496eee01ce0ce16a6
+Source107:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/bg.xpi
+# Source107-md5:	39e4418f6f6b7c28b0fc80aab7ed6d4c
+Source108:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/bn-BD.xpi
+# Source108-md5:	89e36fc415f7bbf923493f4bc136bd1a
+Source109:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/bn-IN.xpi
+# Source109-md5:	3ac8739980648b3d0d6cc4fccd27b1b4
+Source110:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/br.xpi
+# Source110-md5:	f8f12e8fb3f67385f7beb61b26112e43
+Source111:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/bs.xpi
+# Source111-md5:	a0f58ca20e2b432876ed71e17b80afb6
+Source112:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ca.xpi
+# Source112-md5:	aa4368cef0da29a48b4cc957804ec0f1
+Source113:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/cak.xpi
+# Source113-md5:	4a55ef2cd9d4bcc2fa34a429bc03dac4
+Source114:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/cs.xpi
+# Source114-md5:	7b7f9f784a90fbaf55f3b943323872d9
+Source115:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/cy.xpi
+# Source115-md5:	4f45d5779490b74b524eb90100cb151b
+Source116:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/da.xpi
+# Source116-md5:	fdef8d886c4ccb21b242894cdea25f06
+Source117:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/de.xpi
+# Source117-md5:	ce838a90d18cf1cd4b7b7fe67fe83c4f
+Source118:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/dsb.xpi
+# Source118-md5:	5707b7849f966c21ec78fb1e112b1f6f
+Source119:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/el.xpi
+# Source119-md5:	d32089aa3070c39b707dadb30facf6e2
+Source120:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/en-GB.xpi
+# Source120-md5:	af9a283274f094df07163fe71049d763
+Source121:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/en-US.xpi
+# Source121-md5:	c117a20f3577175a79cbce0ea6db04ce
+Source122:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/en-ZA.xpi
+# Source122-md5:	657c2941f85048e3328c3e921f1e89f2
+Source123:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/eo.xpi
+# Source123-md5:	9d6e5926b2c52a45e623e911849b0031
+Source124:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/es-AR.xpi
+# Source124-md5:	9ad4a13e505eaf0dfc1ef2c370e09f98
+Source125:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/es-CL.xpi
+# Source125-md5:	bb852c4eaae5e01661854fc601a05646
+Source126:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/es-ES.xpi
+# Source126-md5:	d181994de7abf194963a1dc7e4fd4cb6
+Source127:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/es-MX.xpi
+# Source127-md5:	35d6ca836417fd82edf037a0de17cf39
+Source128:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/et.xpi
+# Source128-md5:	f31c9c25ee837df75e0fe596a90b4713
+Source129:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/eu.xpi
+# Source129-md5:	fbb960b3660869c7cc3578564b821ec8
+Source130:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/fa.xpi
+# Source130-md5:	821c9c97871c9d5794d819b15d0af6d2
+Source131:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ff.xpi
+# Source131-md5:	ac2f58707c8c5205e624aac11839eba6
+Source132:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/fi.xpi
+# Source132-md5:	0c258ff60680c6c1c4f02b34860ad8ee
+Source133:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/fr.xpi
+# Source133-md5:	8813ae541e58f3fc28b303db86d027a7
+Source134:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/fy-NL.xpi
+# Source134-md5:	ab77e8549579830b33cb67fed18373a0
+Source135:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ga-IE.xpi
+# Source135-md5:	c279169f3ea1a6010100f2d3dde68cf9
+Source136:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/gd.xpi
+# Source136-md5:	41b60b855d8e17dfaaf770562e27c379
+Source137:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/gl.xpi
+# Source137-md5:	f84b70a67b5460fcde8302894c6a4512
+Source138:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/gn.xpi
+# Source138-md5:	736893fbeef19eb68afeddb43de70173
+Source139:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/gu-IN.xpi
+# Source139-md5:	f3d2bd143d640be5aa37dd4dd99d80ff
+Source140:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/he.xpi
+# Source140-md5:	08c062fffdfd2dfcf55ea0bce33a31fd
+Source141:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/hi-IN.xpi
+# Source141-md5:	e07f7d83f00c3f0f1388c81d25c3c279
+Source142:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/hr.xpi
+# Source142-md5:	7fad22d129772df7a3947f023b753de2
+Source143:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/hsb.xpi
+# Source143-md5:	aee3a12300155b5977b04052aabebce8
+Source144:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/hu.xpi
+# Source144-md5:	2693b40bd4dc012d8abdc93944fbbae9
+Source145:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/hy-AM.xpi
+# Source145-md5:	06dc83a17760b3198e266342de46263c
+Source146:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/id.xpi
+# Source146-md5:	e299a8d9ca29a917f347423884f75d0f
+Source147:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/is.xpi
+# Source147-md5:	9b5cdad244ad7db31a279c0f2eb114bf
+Source148:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/it.xpi
+# Source148-md5:	e05611b60350fbf1f1a78b356dc1e24e
+Source149:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ja.xpi
+# Source149-md5:	c0ac826b2aac68844987c86f56513c74
+Source150:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ka.xpi
+# Source150-md5:	f286804ff9fb94d5acf830a3868b1ede
+Source151:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/kab.xpi
+# Source151-md5:	dd2416d5b887db918361c873c56357fb
+Source152:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/kk.xpi
+# Source152-md5:	0bf5eb9abd0046229479ec6fad7f82f5
+Source153:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/km.xpi
+# Source153-md5:	3bc610fc4bd458b7b6bbb13a41fa672f
+Source154:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/kn.xpi
+# Source154-md5:	6349d6d4194666b9e88ec60eeb57f512
+Source155:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ko.xpi
+# Source155-md5:	7bbb872761c000365fc30d23fbaf5c90
+Source156:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/lij.xpi
+# Source156-md5:	3da280d21a75c52a761e736cde906852
+Source157:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/lt.xpi
+# Source157-md5:	6f22522364b9a69caa11030de93a4860
+Source158:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/lv.xpi
+# Source158-md5:	e2e2d5ab3dcdd10064674c5629722364
+Source159:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/mai.xpi
+# Source159-md5:	79a5c88d19d58b1f381dbf8f7e105787
+Source160:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/mk.xpi
+# Source160-md5:	8a197e9327f5f675cd1dda16e875f53d
+Source161:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ml.xpi
+# Source161-md5:	e6333b30bc93b718a9acb0469097fffa
+Source162:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/mr.xpi
+# Source162-md5:	8d7b4966d20079464c8a039367243f83
+Source163:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ms.xpi
+# Source163-md5:	3422fa3fddb24dead137566b7478e952
+Source164:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/my.xpi
+# Source164-md5:	02164c43859194ed51cbbc4c3ea6fbce
+Source165:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/nb-NO.xpi
+# Source165-md5:	6105a75013409bde59f9bfadcf854be7
+Source166:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/nl.xpi
+# Source166-md5:	1ba10ff071ea9a626fd4a71e2a09574d
+Source167:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/nn-NO.xpi
+# Source167-md5:	6a6ed350758b3b81f04e29cd936940d3
+Source168:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/or.xpi
+# Source168-md5:	b037c9f509c7b8f240940cec6129ad92
+Source169:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/pa-IN.xpi
+# Source169-md5:	f3945a96dc0e1e9d619c80a6e31eb436
+Source170:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/pl.xpi
+# Source170-md5:	86968550ffee4a1fcc72c61dba4e30c1
+Source171:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/pt-BR.xpi
+# Source171-md5:	30815546fef941ac0b1742c927858581
+Source172:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/pt-PT.xpi
+# Source172-md5:	7066069a2452722dacf3fc39be8d1a03
+Source173:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/rm.xpi
+# Source173-md5:	f4bba5a74a1b7d5eb312329d9991904d
+Source174:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ro.xpi
+# Source174-md5:	ff03059b77bab1ec300285be98e1d3fa
+Source175:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ru.xpi
+# Source175-md5:	785e46d4c30cb8b36b81f72305d89578
+Source176:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/si.xpi
+# Source176-md5:	ed544d5bc1f3f3bd6175e8f0f6c7d8f4
+Source177:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/sk.xpi
+# Source177-md5:	fef83681b885c743110e6127c72f8e0a
+Source178:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/sl.xpi
+# Source178-md5:	a25876532503275a2605f3362c95c520
+Source179:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/son.xpi
+# Source179-md5:	7af453e36e5e9a1f01bdfc85e4e1bfee
+Source180:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/sq.xpi
+# Source180-md5:	685f3d63c968f35520e2b35e83162f16
+Source181:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/sr.xpi
+# Source181-md5:	8fb6778dc3e81f508e9f73163c873a77
+Source182:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/sv-SE.xpi
+# Source182-md5:	541ef0fae07520dd56e17f69effc79a2
+Source183:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ta.xpi
+# Source183-md5:	a0c51802cfcbe94c9abe4d05294b7c4e
+Source184:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/te.xpi
+# Source184-md5:	6ef4a387af4ae782747a4064dcde2443
+Source185:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/th.xpi
+# Source185-md5:	eb0b1e292b98c343dc5157cac119b5f9
+Source186:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/tr.xpi
+# Source186-md5:	499b4d745c91270d21cb9bf494520ca7
+Source187:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/uk.xpi
+# Source187-md5:	53b4abb8b78d53b97fc3a556951f39b0
+Source188:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/ur.xpi
+# Source188-md5:	a67fd71d57b5bb8731910bca5328c55c
+Source189:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/uz.xpi
+# Source189-md5:	6a2648ef8501b2c9df7272822058abb7
+Source190:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/vi.xpi
+# Source190-md5:	2c90b86e16e656f6b0f4f6f05fe95735
+Source191:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/xh.xpi
+# Source191-md5:	bfd05f246dc509299e07b30d590c57e8
+Source192:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/zh-CN.xpi
+# Source192-md5:	c238e4977db59b1e29bd322fd730eda8
+Source193:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/zh-TW.xpi
+# Source193-md5:	cf2035053c7681985515bd7985d20137
 Patch0:		idl-parser.patch
 Patch2:		xulrunner-paths.patch
 Patch4:		%{name}-prefs.patch
@@ -112,6 +309,7 @@ BuildRequires:	xorg-lib-libXt-devel
 %ifarch %{x8664}
 BuildRequires:	yasm >= 1.0.1
 %endif
+BuildRequires:	unzip
 BuildRequires:	zip
 BuildRequires:	zlib-devel >= 1.2.3
 BuildConflicts:	%{name}-devel < %{version}
@@ -192,8 +390,1620 @@ GeckoMediaPlugins API header files.
 %description -n gmp-api -l pl.UTF-8
 Pliki nagłówkowe API GeckoMediaPlugins.
 
+%package lang-ach
+Summary:	Acoli resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe aczoli dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ach
+Obsoletes:	mozilla-firefox-lang-ach
+BuildArch:	noarch
+
+%description lang-ach
+Acoli resources for Firefox.
+
+%description lang-ach -l pl.UTF-8
+Pliki językowe aczoli dla Firefoksa.
+
+%package lang-af
+Summary:	Afrikaans resources for Firefox
+Summary(pl.UTF-8):	Afrykanerskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-af
+Obsoletes:	mozilla-firefox-lang-af
+BuildArch:	noarch
+
+%description lang-af
+Afrikaans resources for Firefox.
+
+%description lang-af -l pl.UTF-8
+Afrykanerskie pliki językowe dla Firefoksa.
+
+%package lang-an
+Summary:	Aragonese resources for Firefox
+Summary(pl.UTF-8):	Aragońskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-an
+Obsoletes:	mozilla-firefox-lang-an
+BuildArch:	noarch
+
+%description lang-an
+Aragonese resources for Firefox.
+
+%description lang-an -l pl.UTF-8
+Aragońskie pliki językowe dla Firefoksa.
+
+%package lang-ar
+Summary:	Arabic resources for Firefox
+Summary(pl.UTF-8):	Arabskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ar
+Obsoletes:	mozilla-firefox-lang-ar
+BuildArch:	noarch
+
+%description lang-ar
+Arabic resources for Firefox.
+
+%description lang-ar -l pl.UTF-8
+Arabskie pliki językowe dla Firefoksa.
+
+%package lang-as
+Summary:	Assamese resources for Firefox
+Summary(pl.UTF-8):	Asamskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-as
+Obsoletes:	mozilla-firefox-lang-as
+BuildArch:	noarch
+
+%description lang-as
+Assamese resources for Firefox.
+
+%description lang-as -l pl.UTF-8
+Asamskie pliki językowe dla Firefoksa.
+
+%package lang-ast
+Summary:	Asturian resources for Firefox
+Summary(pl.UTF-8):	Asturyjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ast
+Obsoletes:	mozilla-firefox-lang-ast
+BuildArch:	noarch
+
+%description lang-ast
+Asturian resources for Firefox.
+
+%description lang-ast -l pl.UTF-8
+Asturyjskie pliki językowe dla Firefoksa.
+
+%package lang-az
+Summary:	Azerbaijani resources for Firefox
+Summary(pl.UTF-8):	Azerskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-az
+Obsoletes:	mozilla-firefox-lang-az
+BuildArch:	noarch
+
+%description lang-az
+Azerbaijani resources for Firefox.
+
+%description lang-az -l pl.UTF-8
+Azerskie pliki językowe dla Firefoksa.
+
+%package lang-be
+Summary:	Belarusian resources for Firefox
+Summary(pl.UTF-8):	Białoruskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-be
+Obsoletes:	mozilla-firefox-lang-be
+BuildArch:	noarch
+
+%description lang-be
+Belarusian resources for Firefox.
+
+%description lang-be -l pl.UTF-8
+Białoruskie pliki językowe dla Firefoksa.
+
+%package lang-bg
+Summary:	Bulgarian resources for Firefox
+Summary(pl.UTF-8):	Bułgarskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-bg
+Obsoletes:	mozilla-firefox-lang-bg
+BuildArch:	noarch
+
+%description lang-bg
+Bulgarian resources for Firefox.
+
+%description lang-bg -l pl.UTF-8
+Bułgarskie pliki językowe dla Firefoksa.
+
+%package lang-bn
+Summary:	Bengali (Bangladesh) resources for Firefox
+Summary(pl.UTF-8):	Bengalskie pliki językowe dla Firefoksa (wersja dla Bangladeszu)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-bn
+Obsoletes:	mozilla-firefox-lang-bn
+BuildArch:	noarch
+
+%description lang-bn
+Bengali (Bangladesh) resources for Firefox.
+
+%description lang-bn -l pl.UTF-8
+Bengalskie pliki językowe dla Firefoksa (wersja dla Bangladeszu).
+
+%package lang-bn_IN
+Summary:	Bengali (India) resources for Firefox
+Summary(pl.UTF-8):	Bengalskie pliki językowe dla Firefoksa (wersja dla Indii)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-bn_IN
+Obsoletes:	mozilla-firefox-lang-bn_IN
+BuildArch:	noarch
+
+%description lang-bn_IN
+Bengali (India) resources for Firefox.
+
+%description lang-bn_IN -l pl.UTF-8
+Bengalskie pliki językowe dla Firefoksa (wersja dla Indii).
+
+%package lang-br
+Summary:	Breton resources for Firefox
+Summary(pl.UTF-8):	Bretońskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-br
+Obsoletes:	mozilla-firefox-lang-br
+BuildArch:	noarch
+
+%description lang-br
+Breton resources for Firefox.
+
+%description lang-br -l pl.UTF-8
+Bretońskie pliki językowe dla Firefoksa.
+
+%package lang-bs
+Summary:	Bosnian resources for Firefox
+Summary(pl.UTF-8):	Bośniackie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-bs
+Obsoletes:	mozilla-firefox-lang-bs
+BuildArch:	noarch
+
+%description lang-bs
+Bosnian resources for Firefox.
+
+%description lang-bs -l pl.UTF-8
+Bośniackie pliki językowe dla Firefoksa.
+
+%package lang-ca
+Summary:	Catalan resources for Firefox
+Summary(ca.UTF-8):	Recursos catalans per Firefox
+Summary(es.UTF-8):	Recursos catalanes para Firefox
+Summary(pl.UTF-8):	Katalońskie pliki językowe dla Firefoksa
+Group:		I18n
+URL:		http://www.softcatala.org/projectes/mozilla/
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ca
+Obsoletes:	mozilla-firefox-lang-ca
+BuildArch:	noarch
+
+%description lang-ca
+Catalan resources for Firefox.
+
+%description lang-ca -l ca.UTF-8
+Recursos catalans per Firefox.
+
+%description lang-ca -l es.UTF-8
+Recursos catalanes para Firefox.
+
+%description lang-ca -l pl.UTF-8
+Katalońskie pliki językowe dla Firefoksa.
+
+%package lang-cak
+Summary:	Kaqchikel resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe kaqchikel dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+BuildArch:	noarch
+
+%description lang-cak
+Kaqchikel resources for Firefox.
+
+%description lang-cak -l pl.UTF-8
+Pliki językowe kaqchikel dla Firefoksa.
+
+%package lang-cs
+Summary:	Czech resources for Firefox
+Summary(pl.UTF-8):	Czeskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-cs
+Obsoletes:	mozilla-firefox-lang-cs
+BuildArch:	noarch
+
+%description lang-cs
+Czech resources for Firefox.
+
+%description lang-cs -l pl.UTF-8
+Czeskie pliki językowe dla Firefoksa.
+
+%package lang-csb
+Summary:	Kashubian resources for Firefox
+Summary(pl.UTF-8):	Kaszubskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-csb
+Obsoletes:	mozilla-firefox-lang-csb
+BuildArch:	noarch
+
+%description lang-csb
+Kashubian resources for Firefox.
+
+%description lang-csb -l pl.UTF-8
+Kaszubskie pliki językowe dla Firefoksa.
+
+%package lang-cy
+Summary:	Welsh resources for Firefox
+Summary(pl.UTF-8):	Walijskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-cy
+Obsoletes:	mozilla-firefox-lang-cy
+BuildArch:	noarch
+
+%description lang-cy
+Welsh resources for Firefox.
+
+%description lang-cy -l pl.UTF-8
+Walijskie pliki językowe dla Firefoksa.
+
+%package lang-da
+Summary:	Danish resources for Firefox
+Summary(pl.UTF-8):	Duńskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-da
+Obsoletes:	mozilla-firefox-lang-da
+BuildArch:	noarch
+
+%description lang-da
+Danish resources for Firefox.
+
+%description lang-da -l pl.UTF-8
+Duńskie pliki językowe dla Firefoksa.
+
+%package lang-de
+Summary:	German resources for Firefox
+Summary(pl.UTF-8):	Niemieckie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-de
+Obsoletes:	mozilla-firefox-lang-de
+BuildArch:	noarch
+
+%description lang-de
+German resources for Firefox.
+
+%description lang-de -l pl.UTF-8
+Niemieckie pliki językowe dla Firefoksa.
+
+%package lang-dsb
+Summary:	Lower Sorbian resources for Firefox
+Summary(pl.UTF-8):	Dolnołużyckie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-dsb
+Obsoletes:	mozilla-firefox-lang-dsb
+BuildArch:	noarch
+
+%description lang-dsb
+Lower Sorbian resources for Firefox.
+
+%description lang-dsb -l pl.UTF-8
+Dolnołużyckie pliki językowe dla Firefoksa.
+
+%package lang-el
+Summary:	Greek resources for Firefox
+Summary(pl.UTF-8):	Greckie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-el
+Obsoletes:	mozilla-firefox-lang-el
+BuildArch:	noarch
+
+%description lang-el
+Greek resources for Firefox.
+
+%description lang-el -l pl.UTF-8
+Greckie pliki językowe dla Firefoksa.
+
+%package lang-en_GB
+Summary:	English (British) resources for Firefox
+Summary(pl.UTF-8):	Angielskie (brytyjskie) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-en_GB
+Obsoletes:	mozilla-firefox-lang-en_GB
+BuildArch:	noarch
+
+%description lang-en_GB
+English (British) resources for Firefox.
+
+%description lang-en_GB -l pl.UTF-8
+Angielskie (brytyjskie) pliki językowe dla Firefoksa.
+
+%package lang-en_US
+Summary:	English (American) resources for Firefox
+Summary(pl.UTF-8):	Angielskie (amerykańskie) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-en_US
+Obsoletes:	mozilla-firefox-lang-en_US
+BuildArch:	noarch
+
+%description lang-en_US
+English (American) resources for Firefox.
+
+%description lang-en_US -l pl.UTF-8
+Angielskie (amerykańskie) pliki językowe dla Firefoksa.
+
+%package lang-en_ZA
+Summary:	English (South Africa) resources for Firefox
+Summary(pl.UTF-8):	Angielskie pliki językowe dla Firefoksa (wersja dla RPA)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-en_ZA
+Obsoletes:	mozilla-firefox-lang-en_ZA
+BuildArch:	noarch
+
+%description lang-en_ZA
+English (South Africa) resources for Firefox.
+
+%description lang-en_ZA -l pl.UTF-8
+Angielskie pliki językowe dla Firefoksa (wersja dla Republiki
+Południowej Afryki).
+
+%package lang-eo
+Summary:	Esperanto resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe esperanto dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-eo
+Obsoletes:	mozilla-firefox-lang-eo
+BuildArch:	noarch
+
+%description lang-eo
+Esperanto resources for Firefox.
+
+%description lang-eo -l pl.UTF-8
+Pliki językowe esperanto dla Firefoksa.
+
+%package lang-es_AR
+Summary:	Spanish (Andorra) resources for Firefox
+Summary(ca.UTF-8):	Recursos espanyols (Andorra) per Firefox
+Summary(es.UTF-8):	Recursos españoles (Andorra) para Firefox
+Summary(pl.UTF-8):	Hiszpańskie pliki językowe dla Firefoksa (wersja dla Andory)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-es_AR
+Obsoletes:	mozilla-firefox-lang-es_AR
+BuildArch:	noarch
+
+%description lang-es_AR
+Spanish (Spain) resources for Firefox.
+
+%description lang-es_AR -l ca.UTF-8
+Recursos espanyols (Andorra) per Firefox.
+
+%description lang-es_AR -l es.UTF-8
+Recursos españoles (Andorra) para Firefox.
+
+%description lang-es_AR -l pl.UTF-8
+Hiszpańskie pliki językowe dla Firefoksa (wersja dla Andory).
+
+%package lang-es_CL
+Summary:	Spanish (Chile) resources for Firefox
+Summary(ca.UTF-8):	Recursos espanyols (Xile) per Firefox
+Summary(es.UTF-8):	Recursos españoles (Chile) para Firefox
+Summary(pl.UTF-8):	Hiszpańskie pliki językowe dla Firefoksa (wersja dla Chile)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-es_CL
+Obsoletes:	mozilla-firefox-lang-es_CL
+BuildArch:	noarch
+
+%description lang-es_CL
+Spanish (Chile) resources for Firefox.
+
+%description lang-es_CL -l ca.UTF-8
+Recursos espanyols (Xile) per Firefox.
+
+%description lang-es_CL -l es.UTF-8
+Recursos españoles (Chile) para Firefox.
+
+%description lang-es_CL -l pl.UTF-8
+Hiszpańskie pliki językowe dla Firefoksa (wersja dla Chile).
+
+%package lang-es
+Summary:	Spanish (Spain) resources for Firefox
+Summary(ca.UTF-8):	Recursos espanyols (Espanya) per Firefox
+Summary(es.UTF-8):	Recursos españoles (España) para Firefox
+Summary(pl.UTF-8):	Hiszpańskie pliki językowe dla Firefoksa (wersja dla Hiszpanii)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-es
+Obsoletes:	mozilla-firefox-lang-es
+BuildArch:	noarch
+
+%description lang-es
+Spanish (Spain) resources for Firefox.
+
+%description lang-es -l ca.UTF-8
+Recursos espanyols (Espanya) per Firefox.
+
+%description lang-es -l es.UTF-8
+Recursos españoles (España) para Firefox.
+
+%description lang-es -l pl.UTF-8
+Hiszpańskie pliki językowe dla Firefoksa (wersja dla Hiszpanii).
+
+%package lang-es_MX
+Summary:	Spanish (Mexico) resources for Firefox
+Summary(ca.UTF-8):	Recursos espanyols (Mèxic) per Firefox
+Summary(es.UTF-8):	Recursos españoles (México) para Firefox
+Summary(pl.UTF-8):	Hiszpańskie pliki językowe dla Firefoksa (wersja dla Meksyku)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-es_MX
+Obsoletes:	mozilla-firefox-lang-es_MX
+BuildArch:	noarch
+
+%description lang-es_MX
+Spanish (Mexico) resources for Firefox.
+
+%description lang-es_MX -l ca.UTF-8
+Recursos espanyols (Mèxic) per Firefox.
+
+%description lang-es_MX -l es.UTF-8
+Recursos españoles (México) para Firefox.
+
+%description lang-es_MX -l pl.UTF-8
+Hiszpańskie pliki językowe dla Firefoksa (wersja dla Meksyku).
+
+%package lang-et
+Summary:	Estonian resources for Firefox
+Summary(pl.UTF-8):	Estońskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-et
+Obsoletes:	mozilla-firefox-lang-et
+BuildArch:	noarch
+
+%description lang-et
+Estonian resources for Firefox.
+
+%description lang-et -l pl.UTF-8
+Estońskie pliki językowe dla Firefoksa.
+
+%package lang-eu
+Summary:	Basque resources for Firefox
+Summary(pl.UTF-8):	Baskijskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-eu
+Obsoletes:	mozilla-firefox-lang-eu
+BuildArch:	noarch
+
+%description lang-eu
+Basque resources for Firefox.
+
+%description lang-eu -l pl.UTF-8
+Baskijskie pliki językowe dla Firefoksa.
+
+%package lang-fa
+Summary:	Persian resources for Firefox
+Summary(pl.UTF-8):	Perskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-fa
+Obsoletes:	mozilla-firefox-lang-fa
+BuildArch:	noarch
+
+%description lang-fa
+Persian resources for Firefox.
+
+%description lang-fa -l pl.UTF-8
+Perskie pliki językowe dla Firefoksa.
+
+%package lang-ff
+Summary:	Fulah resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe fulani dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ff
+Obsoletes:	mozilla-firefox-lang-ff
+BuildArch:	noarch
+
+%description lang-ff
+Fulah resources for Firefox.
+
+%description lang-ff -l pl.UTF-8
+Pliki językowe fulani dla Firefoksa.
+
+%package lang-fi
+Summary:	Finnish resources for Firefox
+Summary(pl.UTF-8):	Fińskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-fi
+Obsoletes:	mozilla-firefox-lang-fi
+BuildArch:	noarch
+
+%description lang-fi
+Finnish resources for Firefox.
+
+%description lang-fi -l pl.UTF-8
+Fińskie pliki językowe dla Firefoksa.
+
+%package lang-fr
+Summary:	French resources for Firefox
+Summary(pl.UTF-8):	Francuskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-fr
+Obsoletes:	mozilla-firefox-lang-fr
+BuildArch:	noarch
+
+%description lang-fr
+French resources for Firefox.
+
+%description lang-fr -l pl.UTF-8
+Francuskie pliki językowe dla Firefoksa.
+
+%package lang-fy
+Summary:	Frisian resources for Firefox
+Summary(pl.UTF-8):	Fryzyjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-fy
+Obsoletes:	mozilla-firefox-lang-fy
+BuildArch:	noarch
+
+%description lang-fy
+Frisian resources for Firefox.
+
+%description lang-fy -l pl.UTF-8
+Fryzyjskie pliki językowe dla Firefoksa.
+
+%package lang-ga
+Summary:	Irish resources for Firefox
+Summary(pl.UTF-8):	Irlandzkie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ga
+Obsoletes:	mozilla-firefox-lang-ga
+BuildArch:	noarch
+
+%description lang-ga
+Irish resources for Firefox.
+
+%description lang-ga -l pl.UTF-8
+Irlandzkie pliki językowe dla Firefoksa.
+
+%package lang-gd
+Summary:	Gaelic resources for Firefox
+Summary(pl.UTF-8):	Szkockie (gaelickie) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-gd
+Obsoletes:	mozilla-firefox-lang-gd
+BuildArch:	noarch
+
+%description lang-gd
+Gaelic resources for Firefox.
+
+%description lang-gd -l pl.UTF-8
+Szkockie (gaelickie) pliki językowe dla Firefoksa.
+
+%package lang-gl
+Summary:	Galician resources for Firefox
+Summary(pl.UTF-8):	Galicyjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-gl
+Obsoletes:	mozilla-firefox-lang-gl
+BuildArch:	noarch
+
+%description lang-gl
+Galician resources for Firefox.
+
+%description lang-gl -l pl.UTF-8
+Galicyjskie pliki językowe dla Firefoksa.
+
+%package lang-gn
+Summary:	Guarani resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe guarani dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-gn
+Obsoletes:	mozilla-firefox-lang-gn
+BuildArch:	noarch
+
+%description lang-gn
+Guarani resources for Firefox.
+
+%description lang-gn -l pl.UTF-8
+Pliki językowe guarani dla Firefoksa.
+
+%package lang-gu
+Summary:	Gujarati resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe gudźarati dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-gu
+Obsoletes:	mozilla-firefox-lang-gu
+BuildArch:	noarch
+
+%description lang-gu
+Gujarati resources for Firefox.
+
+%description lang-gu -l pl.UTF-8
+Pliki językowe gudźarati dla Firefoksa.
+
+%package lang-he
+Summary:	Hebrew resources for Firefox
+Summary(pl.UTF-8):	Hebrajskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-he
+Obsoletes:	mozilla-firefox-lang-he
+BuildArch:	noarch
+
+%description lang-he
+Hebrew resources for Firefox.
+
+%description lang-he -l pl.UTF-8
+Hebrajskie pliki językowe dla Firefoksa.
+
+%package lang-hi
+Summary:	Hindi resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe hindi dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-hi
+Obsoletes:	mozilla-firefox-lang-hi
+BuildArch:	noarch
+
+%description lang-hi
+Hindi resources for Firefox.
+
+%description lang-hi -l pl.UTF-8
+Pliki językowe hindi dla Firefoksa.
+
+%package lang-hr
+Summary:	Croatian resources for Firefox
+Summary(pl.UTF-8):	Chorwackie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-hr
+Obsoletes:	mozilla-firefox-lang-hr
+BuildArch:	noarch
+
+%description lang-hr
+Croatian resources for Firefox.
+
+%description lang-hr -l pl.UTF-8
+Chorwackie pliki językowe dla Firefoksa.
+
+%package lang-hsb
+Summary:	Upper Sorbian resources for Firefox
+Summary(pl.UTF-8):	Górnołużyckie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-hsb
+Obsoletes:	mozilla-firefox-lang-hsb
+BuildArch:	noarch
+
+%description lang-hsb
+Upper Sorbian resources for Firefox.
+
+%description lang-hsb -l pl.UTF-8
+Górnołużyckie pliki językowe dla Firefoksa.
+
+%package lang-hu
+Summary:	Hungarian resources for Firefox
+Summary(hu.UTF-8):	Magyar nyelv Firefox-hez
+Summary(pl.UTF-8):	Węgierskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-hu
+Obsoletes:	mozilla-firefox-lang-hu
+BuildArch:	noarch
+
+%description lang-hu
+Hungarian resources for Firefox.
+
+%description lang-hu -l hu.UTF-8
+Magyar nyelv Firefox-hez.
+
+%description lang-hu -l pl.UTF-8
+Węgierskie pliki językowe dla Firefoksa.
+
+%package lang-hy
+Summary:	Armenian resources for Firefox
+Summary(pl.UTF-8):	Ormiańskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-hy
+Obsoletes:	mozilla-firefox-lang-hy
+BuildArch:	noarch
+
+%description lang-hy
+Armenian resources for Firefox.
+
+%description lang-hy -l pl.UTF-8
+Ormiańskie pliki językowe dla Firefoksa.
+
+%package lang-id
+Summary:	Indonesian resources for Firefox
+Summary(pl.UTF-8):	Indonezyjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-id
+Obsoletes:	mozilla-firefox-lang-id
+BuildArch:	noarch
+
+%description lang-id
+Indonesian resources for Firefox.
+
+%description lang-id -l pl.UTF-8
+Indonezyjskie pliki językowe dla Firefoksa.
+
+%package lang-is
+Summary:	Icelandic resources for Firefox
+Summary(pl.UTF-8):	Islandzkie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-is
+Obsoletes:	mozilla-firefox-lang-is
+BuildArch:	noarch
+
+%description lang-is
+Icelandic resources for Firefox.
+
+%description lang-is -l pl.UTF-8
+Islandzkie pliki językowe dla Firefoksa.
+
+%package lang-it
+Summary:	Italian resources for Firefox
+Summary(pl.UTF-8):	Włoskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-it
+Obsoletes:	mozilla-firefox-lang-it
+BuildArch:	noarch
+
+%description lang-it
+Italian resources for Firefox.
+
+%description lang-it -l pl.UTF-8
+Włoskie pliki językowe dla Firefoksa.
+
+%package lang-ja
+Summary:	Japanese resources for Firefox
+Summary(pl.UTF-8):	Japońskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ja
+Obsoletes:	mozilla-firefox-lang-ja
+BuildArch:	noarch
+
+%description lang-ja
+Japanese resources for Firefox.
+
+%description lang-ja -l pl.UTF-8
+Japońskie pliki językowe dla Firefoksa.
+
+%package lang-ka
+Summary:	Georgian resources for Firefox
+Summary(pl.UTF-8):	Gruzińskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ka
+Obsoletes:	mozilla-firefox-lang-ka
+BuildArch:	noarch
+
+%description lang-ka
+Georgian resources for Firefox.
+
+%description lang-ka -l pl.UTF-8
+Gruzińskie pliki językowe dla Firefoksa.
+
+%package lang-kab
+Summary:	Kabyle resources for Firefox
+Summary(pl.UTF-8):	Kabylskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+BuildArch:	noarch
+
+%description lang-kab
+Kabyle resources for Firefox.
+
+%description lang-kab -l pl.UTF-8
+Kabylskie pliki językowe dla Firefoksa.
+
+%package lang-kk
+Summary:	Kazakh resources for Firefox
+Summary(pl.UTF-8):	Kazachskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-kk
+Obsoletes:	mozilla-firefox-lang-kk
+BuildArch:	noarch
+
+%description lang-kk
+Kazakh resources for Firefox.
+
+%description lang-kk -l pl.UTF-8
+Kazachskie pliki językowe dla Firefoksa.
+
+%package lang-km
+Summary:	Khmer resources for Firefox
+Summary(pl.UTF-8):	Khmerskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-km
+Obsoletes:	mozilla-firefox-lang-km
+BuildArch:	noarch
+
+%description lang-km
+Khmer resources for Firefox.
+
+%description lang-km -l pl.UTF-8
+Khmerskie pliki językowe dla Firefoksa.
+
+%package lang-kn
+Summary:	Kannada resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe kannada dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-kn
+Obsoletes:	mozilla-firefox-lang-kn
+BuildArch:	noarch
+
+%description lang-kn
+Kannada resources for Firefox.
+
+%description lang-kn -l pl.UTF-8
+Pliki językowe kannada dla Firefoksa.
+
+%package lang-ko
+Summary:	Korean resources for Firefox
+Summary(pl.UTF-8):	Koreańskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ko
+Obsoletes:	mozilla-firefox-lang-ko
+BuildArch:	noarch
+
+%description lang-ko
+Korean resources for Firefox.
+
+%description lang-ko -l pl.UTF-8
+Koreańskie pliki językowe dla Firefoksa.
+
+%package lang-ku
+Summary:	Kurdish resources for Firefox
+Summary(pl.UTF-8):	Kurdyjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ku
+Obsoletes:	mozilla-firefox-lang-ku
+BuildArch:	noarch
+
+%description lang-ku
+Kurdish resources for Firefox.
+
+%description lang-ku -l pl.UTF-8
+Kurdyjskie pliki językowe dla Firefoksa.
+
+%package lang-lij
+Summary:	Ligurian resources for Firefox
+Summary(pl.UTF-8):	Liguryjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-lij
+Obsoletes:	mozilla-firefox-lang-lij
+BuildArch:	noarch
+
+%description lang-lij
+Ligurian resources for Firefox.
+
+%description lang-lij -l pl.UTF-8
+Liguryjskie pliki językowe dla Firefoksa.
+
+%package lang-lt
+Summary:	Lithuanian resources for Firefox
+Summary(pl.UTF-8):	Litewskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-lt
+Obsoletes:	mozilla-firefox-lang-lt
+BuildArch:	noarch
+
+%description lang-lt
+Lithuanian resources for Firefox.
+
+%description lang-lt -l pl.UTF-8
+Litewskie pliki językowe dla Firefoksa.
+
+%package lang-lv
+Summary:	Latvian resources for Firefox
+Summary(pl.UTF-8):	Łotewskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-lv
+Obsoletes:	mozilla-firefox-lang-lv
+BuildArch:	noarch
+
+%description lang-lv
+Latvian resources for Firefox.
+
+%description lang-lv -l pl.UTF-8
+Łotewskie pliki językowe dla Firefoksa.
+
+%package lang-mai
+Summary:	Maithili resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe maithili dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-mai
+Obsoletes:	mozilla-firefox-lang-mai
+BuildArch:	noarch
+
+%description lang-mai
+Maithili resources for Firefox.
+
+%description lang-mai -l pl.UTF-8
+Pliki językowe maithili dla Firefoksa.
+
+%package lang-mk
+Summary:	Macedonian resources for Firefox
+Summary(pl.UTF-8):	Macedońskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-mk
+Obsoletes:	mozilla-firefox-lang-mk
+BuildArch:	noarch
+
+%description lang-mk
+Macedonian resources for Firefox.
+
+%description lang-mk -l pl.UTF-8
+Macedońskie pliki językowe dla Firefoksa.
+
+%package lang-ml
+Summary:	Malayalam resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe malajalam dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ml
+Obsoletes:	mozilla-firefox-lang-ml
+BuildArch:	noarch
+
+%description lang-ml
+Malayalam resources for Firefox.
+
+%description lang-ml -l pl.UTF-8
+Pliki językowe malajalam dla Firefoksa.
+
+%package lang-mr
+Summary:	Marathi resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe marathi dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-mr
+Obsoletes:	mozilla-firefox-lang-mr
+BuildArch:	noarch
+
+%description lang-mr
+Marathi resources for Firefox.
+
+%description lang-mr -l pl.UTF-8
+Pliki językowe marathi dla Firefoksa.
+
+%package lang-ms
+Summary:	Malay resources for Firefox
+Summary(pl.UTF-8):	Malajskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ms
+Obsoletes:	mozilla-firefox-lang-ms
+BuildArch:	noarch
+
+%description lang-ms
+Malay resources for Firefox.
+
+%description lang-ms -l pl.UTF-8
+Malajskie pliki językowe dla Firefoksa.
+
+%package lang-my
+Summary:	Burmese resources for Firefox
+Summary(pl.UTF-8):	Birmańskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+BuildArch:	noarch
+
+%description lang-my
+Burmese resources for Firefox.
+
+%description lang-my -l pl.UTF-8
+Birmańskie pliki językowe dla Firefoksa.
+
+%package lang-nb
+Summary:	Norwegian Bokmaal resources for Firefox
+Summary(pl.UTF-8):	Norweskie (bokmaal) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-nb
+Obsoletes:	mozilla-firefox-lang-nb
+BuildArch:	noarch
+
+%description lang-nb
+Norwegian Bokmaal resources for Firefox.
+
+%description lang-nb -l pl.UTF-8
+Norweskie (bokmaal) pliki językowe dla Firefoksa.
+
+%package lang-nl
+Summary:	Dutch resources for Firefox
+Summary(pl.UTF-8):	Holenderskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-nl
+Obsoletes:	mozilla-firefox-lang-nl
+BuildArch:	noarch
+
+%description lang-nl
+Dutch resources for Firefox.
+
+%description lang-nl -l pl.UTF-8
+Holenderskie pliki językowe dla Firefoksa.
+
+%package lang-nn
+Summary:	Norwegian Nynorsk resources for Firefox
+Summary(pl.UTF-8):	Norweskie (nynorsk) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-nn
+Obsoletes:	mozilla-firefox-lang-nn
+BuildArch:	noarch
+
+%description lang-nn
+Norwegian Nynorsk resources for Firefox.
+
+%description lang-nn -l pl.UTF-8
+Norweskie (nynorsk) pliki językowe dla Firefoksa.
+
+%package lang-or
+Summary:	Oriya resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe orija dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-or
+Obsoletes:	mozilla-firefox-lang-or
+BuildArch:	noarch
+
+%description lang-or
+Oriya resources for Firefox.
+
+%description lang-or -l pl.UTF-8
+Pliki językowe orija dla Firefoksa.
+
+%package lang-pa
+Summary:	Panjabi resources for Firefox
+Summary(pl.UTF-8):	Pendżabskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-pa
+Obsoletes:	mozilla-firefox-lang-pa
+BuildArch:	noarch
+
+%description lang-pa
+Panjabi resources for Firefox.
+
+%description lang-pa -l pl.UTF-8
+Pendżabskie pliki językowe dla Firefoksa.
+
+%package lang-pl
+Summary:	Polish resources for Firefox
+Summary(pl.UTF-8):	Polskie pliki językowe dla Firefoksa
+Group:		I18n
+URL:		http://www.firefox.pl/
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-pl
+Obsoletes:	mozilla-firefox-lang-pl
+BuildArch:	noarch
+
+%description lang-pl
+Polish resources for Firefox.
+
+%description lang-pl -l pl.UTF-8
+Polskie pliki językowe dla Firefoksa.
+
+%package lang-pt_BR
+Summary:	Portuguese (Brazil) resources for Firefox
+Summary(pl.UTF-8):	Portugalskie (brazylijskie) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-pt_BR
+Obsoletes:	mozilla-firefox-lang-pt_BR
+BuildArch:	noarch
+
+%description lang-pt_BR
+Portuguese (Brazil) resources for Firefox.
+
+%description lang-pt_BR -l pl.UTF-8
+Portugalskie (brazylijskie) pliki językowe dla Firefoksa.
+
+%package lang-pt
+Summary:	Portuguese (Portugal) resources for Firefox
+Summary(pl.UTF-8):	Portugalskie pliki językowe dla Firefoksa (wersja dla Portugalii)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-pt
+Obsoletes:	mozilla-firefox-lang-pt
+BuildArch:	noarch
+
+%description lang-pt
+Portuguese (Portugal) resources for Firefox.
+
+%description lang-pt -l pl.UTF-8
+Portugalskie pliki językowe dla Firefoksa (wersja dla Portugalii).
+
+%package lang-rm
+Summary:	Romansh resources for Firefox
+Summary(pl.UTF-8):	Retoromańskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-rm
+Obsoletes:	mozilla-firefox-lang-rm
+BuildArch:	noarch
+
+%description lang-rm
+Romansh resources for Firefox.
+
+%description lang-rm -l pl.UTF-8
+Retoromańskie pliki językowe dla Firefoksa.
+
+%package lang-ro
+Summary:	Romanian resources for Firefox
+Summary(pl.UTF-8):	Rumuńskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ro
+Obsoletes:	mozilla-firefox-lang-ro
+BuildArch:	noarch
+
+%description lang-ro
+Romanian resources for Firefox.
+
+%description lang-ro -l pl.UTF-8
+Rumuńskie pliki językowe dla Firefoksa.
+
+%package lang-ru
+Summary:	Russian resources for Firefox
+Summary(pl.UTF-8):	Rosyjskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ru
+Obsoletes:	mozilla-firefox-lang-ru
+BuildArch:	noarch
+
+%description lang-ru
+Russian resources for Firefox.
+
+%description lang-ru -l pl.UTF-8
+Rosyjskie pliki językowe dla Firefoksa.
+
+%package lang-si
+Summary:	Sinhala resources for Firefox
+Summary(pl.UTF-8):	Syngaleskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-si
+Obsoletes:	mozilla-firefox-lang-si
+BuildArch:	noarch
+
+%description lang-si
+Sinhala resources for Firefox.
+
+%description lang-si -l pl.UTF-8
+Syngaleskie pliki językowe dla Firefoksa.
+
+%package lang-sk
+Summary:	Slovak resources for Firefox
+Summary(pl.UTF-8):	Słowackie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-sk
+Obsoletes:	mozilla-firefox-lang-sk
+BuildArch:	noarch
+
+%description lang-sk
+Slovak resources for Firefox.
+
+%description lang-sk -l pl.UTF-8
+Słowackie pliki językowe dla Firefoksa.
+
+%package lang-sl
+Summary:	Slovene resources for Firefox
+Summary(pl.UTF-8):	Słoweńskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-sl
+Obsoletes:	mozilla-firefox-lang-sl
+BuildArch:	noarch
+
+%description lang-sl
+Slovene resources for Firefox.
+
+%description lang-sl -l pl.UTF-8
+Słoweńskie pliki językowe dla Firefoksa.
+
+%package lang-son
+Summary:	Songhai resources for Firefox
+Summary(pl.UTF-8):	Songhajskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-son
+Obsoletes:	mozilla-firefox-lang-son
+BuildArch:	noarch
+
+%description lang-son
+Songhai resources for Firefox.
+
+%description lang-son -l pl.UTF-8
+Songhajskie pliki językowe dla Firefoksa.
+
+%package lang-sq
+Summary:	Albanian resources for Firefox
+Summary(pl.UTF-8):	Albańskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-sq
+Obsoletes:	mozilla-firefox-lang-sq
+BuildArch:	noarch
+
+%description lang-sq
+Albanian resources for Firefox.
+
+%description lang-sq -l pl.UTF-8
+Albańskie pliki językowe dla Firefoksa.
+
+%package lang-sr
+Summary:	Serbian resources for Firefox
+Summary(pl.UTF-8):	Serbskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-sr
+Obsoletes:	mozilla-firefox-lang-sr
+BuildArch:	noarch
+
+%description lang-sr
+Serbian resources for Firefox.
+
+%description lang-sr -l pl.UTF-8
+Serbskie pliki językowe dla Firefoksa.
+
+%package lang-sv
+Summary:	Swedish resources for Firefox
+Summary(pl.UTF-8):	Szwedzkie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-sv
+Obsoletes:	mozilla-firefox-lang-sv
+BuildArch:	noarch
+
+%description lang-sv
+Swedish resources for Firefox.
+
+%description lang-sv -l pl.UTF-8
+Szwedzkie pliki językowe dla Firefoksa.
+
+%package lang-ta
+Summary:	Tamil (India) resources for Firefox
+Summary(pl.UTF-8):	Tamilskie pliki językowe dla Firefoksa (wersja dla Indii)
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-ta
+Obsoletes:	mozilla-firefox-lang-ta
+BuildArch:	noarch
+
+%description lang-ta
+Tamil (India) resources for Firefox.
+
+%description lang-ta -l pl.UTF-8
+Tamilskie pliki językowe dla Firefoksa (wersja dla Indii).
+
+%package lang-te
+Summary:	Telugu resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe telugu dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-te
+Obsoletes:	mozilla-firefox-lang-te
+BuildArch:	noarch
+
+%description lang-te
+Telugu resources for Firefox.
+
+%description lang-te -l pl.UTF-8
+Pliki językowe telugu dla Firefoksa.
+
+%package lang-th
+Summary:	Thai resources for Firefox
+Summary(pl.UTF-8):	Tajskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-th
+Obsoletes:	mozilla-firefox-lang-th
+BuildArch:	noarch
+
+%description lang-th
+Thai resources for Firefox.
+
+%description lang-th -l pl.UTF-8
+Tajskie pliki językowe dla Firefoksa.
+
+%package lang-tr
+Summary:	Turkish resources for Firefox
+Summary(pl.UTF-8):	Tureckie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-tr
+Obsoletes:	mozilla-firefox-lang-tr
+BuildArch:	noarch
+
+%description lang-tr
+Turkish resources for Firefox.
+
+%description lang-tr -l pl.UTF-8
+Tureckie pliki językowe dla Firefoksa.
+
+%package lang-uk
+Summary:	Ukrainian resources for Firefox
+Summary(pl.UTF-8):	Ukraińskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-uk
+Obsoletes:	mozilla-firefox-lang-uk
+BuildArch:	noarch
+
+%description lang-uk
+Ukrainian resources for Firefox.
+
+%description lang-uk -l pl.UTF-8
+Ukraińskie pliki językowe dla Firefoksa.
+
+%package lang-ur
+Summary:	Urdu resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe urdu dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+BuildArch:	noarch
+
+%description lang-ur
+Urdu resources for Firefox.
+
+%description lang-ur -l pl.UTF-8
+Pliki językowe urdu dla Firefoksa.
+
+%package lang-uz
+Summary:	Uzbek resources for Firefox
+Summary(pl.UTF-8):	Uzbeckie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-uz
+Obsoletes:	mozilla-firefox-lang-uz
+BuildArch:	noarch
+
+%description lang-uz
+Uzbek resources for Firefox.
+
+%description lang-uz -l pl.UTF-8
+Uzbeckie pliki językowe dla Firefoksa.
+
+%package lang-vi
+Summary:	Vietmanese resources for Firefox
+Summary(pl.UTF-8):	Wietnamskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-vi
+Obsoletes:	mozilla-firefox-lang-vi
+BuildArch:	noarch
+
+%description lang-vi
+Vietmanese resources for Firefox.
+
+%description lang-vi -l pl.UTF-8
+Wietnamskie pliki językowe dla Firefoksa.
+
+%package lang-xh
+Summary:	Xhosa resources for Firefox
+Summary(pl.UTF-8):	Pliki językowe xhosa dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-xh
+Obsoletes:	mozilla-firefox-lang-xh
+BuildArch:	noarch
+
+%description lang-xh
+Xhosa resources for Firefox.
+
+%description lang-xh -l pl.UTF-8
+Pliki językowe xhosa dla Firefoksa.
+
+%package lang-zh_CN
+Summary:	Simplified Chinese resources for Firefox
+Summary(pl.UTF-8):	Chińskie (uproszczone) pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-zh_CN
+Obsoletes:	mozilla-firefox-lang-zh_CN
+BuildArch:	noarch
+
+%description lang-zh_CN
+Simplified Chinese resources for Firefox.
+
+%description lang-zh_CN -l pl.UTF-8
+Chińskie uproszczone pliki językowe dla Firefoksa.
+
+%package lang-zh_TW
+Summary:	Traditional Chinese resources for Firefox
+Summary(pl.UTF-8):	Chińskie tradycyjne pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-zh_TW
+Obsoletes:	mozilla-firefox-lang-zh_TW
+BuildArch:	noarch
+
+%description lang-zh_TW
+Traditional Chinese resources for Firefox.
+
+%description lang-zh_TW -l pl.UTF-8
+Chińskie tradycyjne pliki językowe dla Firefoksa.
+
+%package lang-zu
+Summary:	Zulu resources for Firefox
+Summary(pl.UTF-8):	Zuluskie pliki językowe dla Firefoksa
+Group:		I18n
+Requires:	firefox >= %{version}
+Provides:	firefox-lang-resources = %{version}
+Obsoletes:	iceweasel-lang-zu
+Obsoletes:	mozilla-firefox-lang-zu
+BuildArch:	noarch
+
+%description lang-zu
+Zulu resources for Firefox.
+
+%description lang-zu -l pl.UTF-8
+Zuluskie pliki językowe dla Firefoksa.
+
 %prep
-%setup -q
+unpack() {
+	local args="$1" file="$2"
+	cp -p $file .
+}
+%define __unzip unpack
+%setup -q %(seq -f '-a %g' 100 193 | xargs)
 
 # avoid using included headers (-I. is before HUNSPELL_CFLAGS)
 %{__rm} extensions/spellcheck/hunspell/src/{*.hxx,hunspell.h}
@@ -384,6 +2194,11 @@ chmod 755 $RPM_BUILD_ROOT%{_sbindir}/%{name}-chrome+xpcom-generate
 install -d $RPM_BUILD_ROOT%{_includedir}
 cp -pr dom/media/gmp/gmp-api $RPM_BUILD_ROOT%{_includedir}
 
+for a in *.xpi; do
+	basename=$(basename $a .xpi)
+	cp -p $a $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions/langpack-$basename@firefox.mozilla.org.xpi
+done
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -480,3 +2295,391 @@ fi
 %files -n gmp-api
 %defattr(644,root,root,755)
 %{_includedir}/gmp-api
+
+%files -n firefox-lang-ach
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ach@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-af
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-af@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-an
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-an@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ar
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ar@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-as
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-as@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ast
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ast@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-az
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-az@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-bg
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-bg@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-bn
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-bn-BD@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-bn_IN
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-bn-IN@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-br
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-br@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-bs
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-bs@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ca
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ca@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-cak
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-cak@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-cs
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-cs@firefox.mozilla.org.xpi
+
+#%files -n firefox-lang-csb
+#%defattr(644,root,root,755)
+#%{_datadir}/%{name}/browser/extensions/langpack-csb@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-cy
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-cy@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-da
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-da@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-de
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-de@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-dsb
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-dsb@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-el
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-el@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-en_GB
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-en-GB@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-en_US
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-en-US@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-en_ZA
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-en-ZA@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-eo
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-eo@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-es_AR
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-es-AR@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-es_CL
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-es-CL@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-es
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-es-ES@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-es_MX
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-es-MX@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-et
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-et@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-eu
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-eu@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-fa
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-fa@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ff
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ff@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-fi
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-fi@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-fr
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-fr@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-fy
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-fy-NL@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ga
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ga-IE@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-gd
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-gd@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-gl
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-gl@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-gn
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-gn@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-gu
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-gu-IN@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-he
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-he@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-hi
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-hi-IN@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-hr
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-hr@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-hsb
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-hsb@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-hu
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-hu@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-hy
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-hy-AM@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-id
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-id@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-is
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-is@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-it
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-it@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ja
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ja@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ka
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ka@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-kab
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-kab@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-kk
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-kk@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-km
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-km@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-kn
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-kn@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ko
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ko@firefox.mozilla.org.xpi
+
+#%files -n firefox-lang-ku
+#%defattr(644,root,root,755)
+#%{_datadir}/%{name}/browser/extensions/langpack-ku@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-lij
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-lij@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-lt
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-lt@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-lv
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-lv@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-mai
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-mai@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-mk
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-mk@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ml
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ml@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-mr
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-mr@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ms
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ms@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-my
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-my@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-nb
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-nb-NO@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-nl
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-nl@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-nn
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-nn-NO@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-or
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-or@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-pa
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-pa-IN@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-pl
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-pl@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-pt_BR
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-pt-BR@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-pt
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-pt-PT@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-rm
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-rm@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ro
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ro@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ru
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ru@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-si
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-si@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-sk
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-sk@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-sl
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-sl@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-son
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-son@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-sq
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-sq@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-sr
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-sr@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-sv
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-sv-SE@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ta
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ta@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-te
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-te@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-th
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-th@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-tr
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-tr@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-uk
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-uk@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-ur
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-ur@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-uz
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-uz@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-vi
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-vi@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-xh
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-xh@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-zh_CN
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-zh-CN@firefox.mozilla.org.xpi
+
+%files -n firefox-lang-zh_TW
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/browser/extensions/langpack-zh-TW@firefox.mozilla.org.xpi
+
+#%files -n firefox-lang-zu
+#%defattr(644,root,root,755)
+#%{_datadir}/%{name}/browser/extensions/langpack-zu@firefox.mozilla.org.xpi
