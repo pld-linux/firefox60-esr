@@ -243,6 +243,8 @@ Patch7:		%{name}-middle_click_paste.patch
 Patch8:		%{name}-system-virtualenv.patch
 Patch9:		%{name}-Disable-Firefox-Health-Report.patch
 Patch10:	freetype.patch
+Patch11:	mozilla-1405267.patch
+Patch12:	rhbz-1497932.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
@@ -2019,6 +2021,8 @@ echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Mak
 %patch8 -p2
 %patch9 -p1
 %patch10 -p2
+%patch11 -p1
+%patch12 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
 
@@ -2100,6 +2104,8 @@ ac_add_options --with-system-nss
 ac_add_options --with-system-png
 ac_add_options --with-system-zlib
 ac_add_options --with-x
+# Workaround for mozbz#1341234
+ac_add_options BINDGEN_CFLAGS="$(pkg-config nspr pixman-1 --cflags)"
 EOF
 
 %if %{with pgo}
@@ -2255,11 +2261,14 @@ fi
 %{_datadir}/%{name}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{_libdir}/%{name}/browser/omni.ja
 
+%{_libdir}/%{name}/browser/features/activity-stream@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/aushelper@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/clicktoplay-rollout@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/e10srollout@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/firefox@getpocket.com.xpi
 %{_libdir}/%{name}/browser/features/followonsearch@mozilla.com.xpi
+%{_libdir}/%{name}/browser/features/formautofill@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/onboarding@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/screenshots@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/shield-recipe-client@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/webcompat@mozilla.org.xpi
