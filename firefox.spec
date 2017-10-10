@@ -29,8 +29,8 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
-%define		nspr_ver	4.14
-%define		nss_ver		3.30.2
+%define		nspr_ver	4.16
+%define		nss_ver		3.32.1
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
