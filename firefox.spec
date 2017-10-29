@@ -2305,390 +2305,390 @@ fi
 %defattr(644,root,root,755)
 %{_includedir}/gmp-api
 
-%files -n firefox-lang-ach
+%files lang-ach
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ach@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-af
+%files lang-af
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-af@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-an
+%files lang-an
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-an@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ar
+%files lang-ar
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ar@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-as
+%files lang-as
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-as@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ast
+%files lang-ast
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ast@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-az
+%files lang-az
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-az@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-bg
+%files lang-bg
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-bg@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-bn
+%files lang-bn
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-bn-BD@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-bn_IN
+%files lang-bn_IN
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-bn-IN@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-br
+%files lang-br
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-br@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-bs
+%files lang-bs
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-bs@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ca
+%files lang-ca
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ca@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-cak
+%files lang-cak
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-cak@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-cs
+%files lang-cs
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-cs@firefox.mozilla.org.xpi
 
-#%files -n firefox-lang-csb
+#%files lang-csb
 #%defattr(644,root,root,755)
 #%{_datadir}/%{name}/browser/extensions/langpack-csb@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-cy
+%files lang-cy
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-cy@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-da
+%files lang-da
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-da@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-de
+%files lang-de
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-de@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-dsb
+%files lang-dsb
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-dsb@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-el
+%files lang-el
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-el@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-en_GB
+%files lang-en_GB
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-en-GB@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-en_US
+%files lang-en_US
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-en-US@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-en_ZA
+%files lang-en_ZA
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-en-ZA@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-eo
+%files lang-eo
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-eo@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-es_AR
+%files lang-es_AR
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-es-AR@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-es_CL
+%files lang-es_CL
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-es-CL@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-es
+%files lang-es
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-es-ES@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-es_MX
+%files lang-es_MX
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-es-MX@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-et
+%files lang-et
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-et@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-eu
+%files lang-eu
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-eu@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-fa
+%files lang-fa
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-fa@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ff
+%files lang-ff
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ff@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-fi
+%files lang-fi
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-fi@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-fr
+%files lang-fr
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-fr@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-fy
+%files lang-fy
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-fy-NL@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ga
+%files lang-ga
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ga-IE@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-gd
+%files lang-gd
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-gd@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-gl
+%files lang-gl
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-gl@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-gn
+%files lang-gn
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-gn@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-gu
+%files lang-gu
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-gu-IN@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-he
+%files lang-he
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-he@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-hi
+%files lang-hi
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-hi-IN@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-hr
+%files lang-hr
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-hr@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-hsb
+%files lang-hsb
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-hsb@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-hu
+%files lang-hu
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-hu@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-hy
+%files lang-hy
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-hy-AM@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-id
+%files lang-id
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-id@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-is
+%files lang-is
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-is@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-it
+%files lang-it
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-it@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ja
+%files lang-ja
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ja@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ka
+%files lang-ka
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ka@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-kab
+%files lang-kab
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-kab@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-kk
+%files lang-kk
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-kk@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-km
+%files lang-km
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-km@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-kn
+%files lang-kn
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-kn@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ko
+%files lang-ko
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ko@firefox.mozilla.org.xpi
 
-#%files -n firefox-lang-ku
+#%files lang-ku
 #%defattr(644,root,root,755)
 #%{_datadir}/%{name}/browser/extensions/langpack-ku@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-lij
+%files lang-lij
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-lij@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-lt
+%files lang-lt
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-lt@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-lv
+%files lang-lv
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-lv@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-mai
+%files lang-mai
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-mai@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-mk
+%files lang-mk
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-mk@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ml
+%files lang-ml
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ml@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-mr
+%files lang-mr
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-mr@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ms
+%files lang-ms
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ms@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-my
+%files lang-my
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-my@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-nb
+%files lang-nb
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-nb-NO@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-nl
+%files lang-nl
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-nl@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-nn
+%files lang-nn
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-nn-NO@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-or
+%files lang-or
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-or@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-pa
+%files lang-pa
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-pa-IN@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-pl
+%files lang-pl
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-pl@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-pt_BR
+%files lang-pt_BR
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-pt-BR@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-pt
+%files lang-pt
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-pt-PT@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-rm
+%files lang-rm
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-rm@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ro
+%files lang-ro
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ro@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ru
+%files lang-ru
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ru@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-si
+%files lang-si
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-si@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-sk
+%files lang-sk
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-sk@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-sl
+%files lang-sl
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-sl@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-son
+%files lang-son
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-son@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-sq
+%files lang-sq
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-sq@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-sr
+%files lang-sr
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-sr@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-sv
+%files lang-sv
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-sv-SE@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ta
+%files lang-ta
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ta@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-te
+%files lang-te
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-te@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-th
+%files lang-th
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-th@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-tr
+%files lang-tr
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-tr@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-uk
+%files lang-uk
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-uk@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-ur
+%files lang-ur
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-ur@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-uz
+%files lang-uz
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-uz@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-vi
+%files lang-vi
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-vi@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-xh
+%files lang-xh
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-xh@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-zh_CN
+%files lang-zh_CN
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-zh-CN@firefox.mozilla.org.xpi
 
-%files -n firefox-lang-zh_TW
+%files lang-zh_TW
 %defattr(644,root,root,755)
 %{_datadir}/%{name}/browser/extensions/langpack-zh-TW@firefox.mozilla.org.xpi
 
-#%files -n firefox-lang-zu
+#%files lang-zu
 #%defattr(644,root,root,755)
 #%{_datadir}/%{name}/browser/extensions/langpack-zu@firefox.mozilla.org.xpi
