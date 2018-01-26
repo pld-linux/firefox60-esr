@@ -52,9 +52,9 @@ diff -ur mozilla.orig/browser/app/profile/firefox.js mozilla/browser/app/profile
  pref("browser.xul.error_pages.enabled", true);
 -pref("browser.xul.error_pages.expert_bad_cert", false);
 +pref("browser.xul.error_pages.expert_bad_cert", true);
+ pref("browser.xul.error_pages.show_safe_browsing_details_on_load", false);
  
  // Enable captive portal detection.
- pref("network.captive-portal-service.enabled", true);
 --- a/modules/libpref/init/all.js
 +++ b/modules/libpref/init/all.js
 @@ -1510,7 +1510,7 @@ pref("layout.css.visited_links_enabled", true);
