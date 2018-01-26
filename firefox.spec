@@ -346,7 +346,7 @@ Obsoletes:	mozilla-firefox-lang-en < 2.0.0.8-3
 Obsoletes:	mozilla-firefox-libs
 Obsoletes:	xulrunner
 Obsoletes:	xulrunner-gnome
-Obsoletes:	xulrunner-libs
+Obsoletes:	xulrunner-libs < 42
 Conflicts:	firefox-lang-resources < %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
