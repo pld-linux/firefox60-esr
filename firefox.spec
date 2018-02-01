@@ -325,7 +325,7 @@ Requires:	glib2 >= 1:2.22
 %{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
 Requires:	hicolor-icon-theme
 Requires:	libjpeg-turbo
-Requires:	libpng >= 2:1.6.31
+Requires:	libpng >= 2:1.6.34
 Requires:	libpng(APNG) >= 0.10
 Requires:	libvpx >= 1.5.0
 Requires:	myspell-common
