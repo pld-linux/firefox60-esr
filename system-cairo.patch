@@ -9,3 +9,16 @@
    if (cairo_font_face_status(font) != CAIRO_STATUS_SUCCESS) {
      gfxWarning() << "Failed creating Cairo font face for Fontconfig pattern";
      FcPatternDestroy(pattern);
+--- mozilla-release-239e434d6d2b8e1e2b697c3416d1e96d48fe98e5/gfx/thebes/gfxFcPlatformFontList.cpp~	2018-03-22 21:46:41.000000000 +0100
++++ mozilla-release-239e434d6d2b8e1e2b697c3416d1e96d48fe98e5/gfx/thebes/gfxFcPlatformFontList.cpp	2018-03-31 13:14:40.191812247 +0200
+@@ -728,9 +728,7 @@
+     }
+ 
+     cairo_font_face_t *face =
+-        cairo_ft_font_face_create_for_pattern(aRenderPattern,
+-                                              coords.Elements(),
+-                                              coords.Length());
++        cairo_ft_font_face_create_for_pattern(aRenderPattern);
+ 
+     if (mFontData) {
+         // for data fonts, add the face/data pointer to the cairo font face
