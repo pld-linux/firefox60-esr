@@ -2138,14 +2138,12 @@ cp -aL ${OBJDIR}/dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
 # move arch independant ones to datadir
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions
-%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/icons $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/icons
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/defaults $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/{pref,preferences}
 
 ln -s ../../../share/%{name}/browser/chrome $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome
 ln -s ../../../share/%{name}/browser/defaults $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/defaults
 ln -s ../../../share/%{name}/browser/extensions $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions
-ln -s ../../../share/%{name}/browser/icons $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/icons
 
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/%{name}/dictionaries
 ln -s %{_datadir}/myspell $RPM_BUILD_ROOT%{_libdir}/%{name}/dictionaries
@@ -2231,12 +2229,10 @@ fi
 %dir %{_datadir}/%{name}/browser/extensions
 %{_datadir}/%{name}/browser/chrome
 %{_datadir}/%{name}/browser/defaults
-%{_datadir}/%{name}/browser/icons
 
 # symlinks
 %{_libdir}/%{name}/browser/extensions
 %{_libdir}/%{name}/browser/chrome
-%{_libdir}/%{name}/browser/icons
 %{_libdir}/%{name}/browser/defaults
 
 %attr(755,root,root) %{_libdir}/%{name}/firefox
