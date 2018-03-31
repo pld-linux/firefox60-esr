@@ -4,7 +4,6 @@
 #
 # Conditional build:
 %bcond_with	tests		# enable tests (whatever they check)
-%bcond_without	gtk3		# GTK+ 3.x instead of 2.x
 %bcond_without	kerberos	# disable krb5 support
 %bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
@@ -262,8 +261,8 @@ BuildRequires:	freetype-devel >= 1:2.1.8
 BuildRequires:	glib2-devel >= 1:2.22
 BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gstreamer-plugins-base-devel >= 1.0
-%{!?with_gtk3:BuildRequires:	gtk+2-devel >= 2:2.18.0}
-%{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.4.0}
+BuildRequires:	gtk+2-devel >= 2:2.18.0
+BuildRequires:	gtk+3-devel >= 3.4.0
 %{?with_kerberos:BuildRequires:	heimdal-devel >= 0.7.1}
 BuildRequires:	hunspell-devel >= 1.6.1
 BuildRequires:	libIDL-devel >= 0.8.0
@@ -324,8 +323,8 @@ Requires:	dbus-glib >= 0.60
 Requires:	desktop-file-utils
 Requires:	fontconfig-libs >= 1:2.7.0
 Requires:	glib2 >= 1:2.22
-%{!?with_gtk3:Requires:	gtk+2 >= 2:2.18.0}
-%{?with_gtk3:Requires:	gtk+3 >= 3.4.0}
+Requires:	gtk+2 >= 2:2.18.0
+Requires:	gtk+3 >= 3.4.0
 Requires:	hicolor-icon-theme
 Requires:	libjpeg-turbo
 Requires:	libpng >= 2:1.6.34
@@ -2077,7 +2076,7 @@ ac_add_options --disable-necko-wifi
 ac_add_options --disable-updater
 ac_add_options --enable-alsa
 ac_add_options --enable-chrome-format=omni
-ac_add_options --enable-default-toolkit=%{?with_gtk3:cairo-gtk3}%{!?with_gtk3:cairo-gtk2}
+ac_add_options --enable-default-toolkit=cairo-gtk3
 ac_add_options --enable-extensions=default
 ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
@@ -2278,11 +2277,9 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/libmozsandbox.so
 %{_libdir}/%{name}/dependentlibs.list
 %{_libdir}/%{name}/omni.ja
-%if %{with gtk3}
 %dir %{_libdir}/%{name}/gtk2
 %attr(755,root,root) %{_libdir}/%{name}/gtk2/libmozgtk.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozgtk.so
-%endif
 
 %files -n gmp-api
 %defattr(644,root,root,755)
