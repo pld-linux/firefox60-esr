@@ -38,7 +38,7 @@ Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	59.0.2
 %define	hg_rev	239e434d6d2b8e1e2b697c3416d1e96d48fe98e5
-Release:	0.1
+Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 #Source0:	http://archive.mozilla.org/pub/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
