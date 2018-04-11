@@ -7,6 +7,7 @@
 %bcond_without	kerberos	# disable krb5 support
 %bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
+%bcond_with	geckodriver	# WebDriver
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
@@ -2078,6 +2079,7 @@ ac_add_options --enable-alsa
 ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=cairo-gtk3
 ac_add_options --enable-extensions=default
+%{?with_geckodriver:ac_add_options --enable-geckodriver}
 ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
 ac_add_options --enable-startup-notification
