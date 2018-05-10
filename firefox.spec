@@ -7,7 +7,7 @@
 %bcond_without	kerberos	# disable krb5 support
 %bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
-%bcond_with	geckodriver	# WebDriver
+%bcond_without	geckodriver	# WebDriver
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
@@ -2000,6 +2000,16 @@ Zulu resources for Firefox.
 %description lang-zu -l pl.UTF-8
 Zuluskie pliki językowe dla Firefoksa.
 
+%package geckodriver
+Summary:	WebDriver for Firefox
+Group:		Applications
+Requires:	firefox >= %{version}
+
+%description geckodriver
+WebDriver is an open source tool for automated testing of webapps
+across many browsers. It provides capabilities for navigating to web
+pages, user input, JavaScript execution, and more.
+
 %prep
 unpack() {
 	local args="$1" file="$2"
@@ -2134,6 +2144,7 @@ OBJDIR=obj-%{_target_cpu}
 	PKG_SKIP_STRIP=1
 
 cp -aL ${OBJDIR}/dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
+%{?with_geckodriver:cp -aL ${OBJDIR}/dist/bin/geckodriver $RPM_BUILD_ROOT%{_bindir}/}
 
 # move arch independant ones to datadir
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
@@ -2672,3 +2683,9 @@ fi
 #%files lang-zu
 #%defattr(644,root,root,755)
 #%{_datadir}/%{name}/browser/extensions/langpack-zu@firefox.mozilla.org.xpi
+
+%if %{with geckodriver}
+%files geckodriver
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/geckodriver
+%endif
