@@ -38,7 +38,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	60.0.1
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 # http://archive.mozilla.org/pub/firefox/releases/%{version}/SOURCE
@@ -237,6 +237,7 @@ Source192:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i68
 Source193:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/zh-TW.xpi
 # Source193-md5:	e39e38f56667178e17e4cdb85a5d1114
 Patch0:		idl-parser.patch
+Patch1:		ffmpeg4.patch
 Patch4:		%{name}-prefs.patch
 Patch5:		%{name}-pld-bookmarks.patch
 Patch6:		%{name}-no-subshell.patch
@@ -2024,6 +2025,7 @@ unpack() {
 echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Makefile.in
 
 %patch0 -p2
+%patch1 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
