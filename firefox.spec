@@ -30,20 +30,20 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 # The actual sqlite version (see RHBZ#480989):
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
-%define		nspr_ver	4.17
-%define		nss_ver		3.34.1
+%define		nspr_ver	4.19
+%define		nss_ver		3.37
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
-Version:	60.0.2
+Version:	61.0
 Release:	1
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 # http://archive.mozilla.org/pub/firefox/releases/%{version}/SOURCE
 Source0:	http://archive.mozilla.org/pub/firefox/releases/%{version}/source/firefox-%{version}.source.tar.xz
-# Source0-md5:	b00d75651f328abff5eb6782d9373b73
+# Source0-md5:	a5a0e633a348d338f1baaa838f5f24bf
 Source3:	%{name}.desktop
 Source4:	%{name}.sh
 Source5:	vendor.js
