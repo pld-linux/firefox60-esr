@@ -236,8 +236,7 @@ Source192:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i68
 # Source192-md5:	7342baf29f6e932ddc330d4932573934
 Source193:	http://releases.mozilla.org/pub/firefox/releases/%{version}/linux-i686/xpi/zh-TW.xpi
 # Source193-md5:	f165bb2490aac1bbeec6bf567f5dd496
-Patch0:		idl-parser.patch
-Patch1:		ffmpeg4.patch
+
 Patch4:		%{name}-prefs.patch
 Patch5:		%{name}-pld-bookmarks.patch
 Patch6:		%{name}-no-subshell.patch
@@ -2024,8 +2023,6 @@ unpack() {
 # hunspell needed for factory including mozHunspell.h
 echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Makefile.in
 
-%patch0 -p2
-%patch1 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
@@ -2150,7 +2147,7 @@ cp -aL ${OBJDIR}/dist/firefox/* $RPM_BUILD_ROOT%{_libdir}/%{name}/
 
 # move arch independant ones to datadir
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/chrome $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/chrome
-%{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/browser/extensions $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions
+install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/extensions
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/%{name}/defaults $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/%{name}/browser/defaults/{pref,preferences}
 
@@ -2255,8 +2252,6 @@ fi
 %{_libdir}/%{name}/chrome.manifest
 %{_libdir}/%{name}/browser/blocklist.xml
 %{_libdir}/%{name}/browser/chrome.manifest
-# the signature of the default theme
-%{_datadir}/%{name}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{_libdir}/%{name}/browser/omni.ja
 
 %{_libdir}/%{name}/browser/features/activity-stream@mozilla.org.xpi
@@ -2267,12 +2262,13 @@ fi
 %{_libdir}/%{name}/browser/features/onboarding@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/screenshots@mozilla.org.xpi
 %{_libdir}/%{name}/browser/features/webcompat@mozilla.org.xpi
+%{_libdir}/%{name}/browser/features/webcompat-reporter@mozilla.org.xpi
 
 %attr(755,root,root) %{_libdir}/%{name}/plugin-container
 %{_libdir}/%{name}/dictionaries
 
 %dir %{_libdir}/%{name}/fonts
-%{_libdir}/%{name}/fonts/EmojiOneMozilla.ttf
+%{_libdir}/%{name}/fonts/TwemojiMozilla.ttf
 
 %dir %{_libdir}/%{name}/gmp-clearkey
 %dir %{_libdir}/%{name}/gmp-clearkey/0.1
