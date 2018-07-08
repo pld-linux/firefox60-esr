@@ -12,7 +12,7 @@
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
 %bcond_with	system_cairo	# build with system cairi (not supported in 60.0)
-%bcond_without	clang		# build using Clang/LLVM
+%bcond_with	clang		# build using Clang/LLVM
 
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
