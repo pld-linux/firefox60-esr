@@ -8,6 +8,7 @@
 %bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 %bcond_without	geckodriver	# WebDriver
+%bcond_with	gold		# use gold linker
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
@@ -249,6 +250,7 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	autoconf2_13
 BuildRequires:	automake
+%{?with_gold:BuildRequires:	binutils >= 3:2.20.51.0.7}
 BuildRequires:	bzip2-devel
 %{?with_system_cairo:BuildRequires:	cairo-devel >= 1.10.2-5}
 BuildRequires:	cargo
@@ -2088,6 +2090,7 @@ ac_add_options --enable-chrome-format=omni
 ac_add_options --enable-default-toolkit=cairo-gtk3
 ac_add_options --enable-extensions=default
 %{?with_geckodriver:ac_add_options --enable-geckodriver}
+%{?with_gold:ac_add_options --enable-linker=gold}
 ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
 ac_add_options --enable-startup-notification
