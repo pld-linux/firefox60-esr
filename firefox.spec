@@ -8,7 +8,7 @@
 %bcond_without	official	# official Firefox branding
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 %bcond_without	geckodriver	# WebDriver
-%bcond_with	gold		# use gold linker
+%bcond_without	gold		# use default linker instead of gold
 # - disabled shared_js - https://bugzilla.mozilla.org/show_bug.cgi?id=1039964
 %bcond_with	shared_js	# shared libmozjs library [broken]
 %bcond_without	system_icu	# build without system ICU
