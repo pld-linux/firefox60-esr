@@ -33,7 +33,7 @@ curl -s $U | sed -ne 's,.*href="\([^"]\+\)/".*,'"$U"'xpi/\1.xpi,p'
 %define		sqlite_build_version %(pkg-config --silence-errors --modversion sqlite3 2>/dev/null || echo ERROR)
 
 %define		nspr_ver	4.19
-%define		nss_ver		3.37
+%define		nss_ver		3.37.3
 
 Summary:	Firefox web browser
 Summary(hu.UTF-8):	Firefox web böngésző
@@ -275,7 +275,7 @@ BuildRequires:	libatomic-devel
 BuildRequires:	libevent-devel >= 1.4.7
 # standalone libffi 3.0.9 or gcc's from 4.5(?)+
 BuildRequires:	libffi-devel >= 6:3.0.9
-%{?with_system_icu:BuildRequires:	libicu-devel >= 58.1}
+%{?with_system_icu:BuildRequires:	libicu-devel >= 59.1}
 # requires libjpeg-turbo implementing at least libjpeg 6b API
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libjpeg-turbo-devel
@@ -301,7 +301,7 @@ BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.601
 BuildRequires:	rust >= 1.22.1
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.20.1
+BuildRequires:	sqlite3-devel >= 3.23.1
 BuildRequires:	startup-notification-devel >= 0.8
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXScrnSaver-devel
