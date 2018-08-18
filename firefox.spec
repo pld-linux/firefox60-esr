@@ -14,6 +14,7 @@
 %bcond_without	system_icu	# build without system ICU
 %bcond_with	system_cairo	# build with system cairi (not supported in 60.0)
 %bcond_with	clang		# build using Clang/LLVM
+%bcond_with	legacy_exts	# build with legacy extensions support
 
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
@@ -2113,6 +2114,9 @@ ac_add_options --with-system-zlib
 ac_add_options --with-x
 # Workaround for mozbz#1341234
 ac_add_options BINDGEN_CFLAGS="$(pkg-config nspr pixman-1 --cflags)"
+%if %{with legacy_exts}
+ac_add_options "MOZ_ALLOW_LEGACY_EXTENSIONS=1"
+%endif
 EOF
 
 %if %{with pgo}
