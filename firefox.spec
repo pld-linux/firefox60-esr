@@ -40,7 +40,7 @@ Summary(hu.UTF-8):	Firefox web böngésző
 Summary(pl.UTF-8):	Firefox - przeglądarka WWW
 Name:		firefox
 Version:	61.0.2
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		X11/Applications/Networking
 # http://archive.mozilla.org/pub/firefox/releases/%{version}/SOURCE
@@ -267,7 +267,6 @@ BuildRequires:	gstreamer-plugins-base-devel >= 1.0
 BuildRequires:	gtk+2-devel >= 2:2.18.0
 BuildRequires:	gtk+3-devel >= 3.4.0
 %{?with_kerberos:BuildRequires:	heimdal-devel >= 0.7.1}
-BuildRequires:	hunspell-devel >= 1.6.1
 BuildRequires:	libIDL-devel >= 0.8.0
 BuildRequires:	libatomic-devel
 # DECnet (dnprogs.spec), not dummy net (libdnet.spec)
@@ -2021,11 +2020,6 @@ unpack() {
 %define __unzip unpack
 %setup -q %(seq -f '-a %g' 100 193 | xargs)
 
-# avoid using included headers (-I. is before HUNSPELL_CFLAGS)
-%{__rm} extensions/spellcheck/hunspell/src/{*.hxx,hunspell.h}
-# hunspell needed for factory including mozHunspell.h
-echo 'LOCAL_INCLUDES += $(MOZ_HUNSPELL_CFLAGS)' >> extensions/spellcheck/src/Makefile.in
-
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
@@ -2097,7 +2091,6 @@ ac_add_options --enable-readline
 ac_add_options --enable-startup-notification
 %{?with_system_cairo:ac_add_options --enable-system-cairo}
 ac_add_options --enable-system-ffi
-ac_add_options --enable-system-hunspell
 ac_add_options --enable-system-sqlite
 %{?with_official:ac_add_options --enable-official-branding}
 ac_add_options --with-distribution-id=org.pld-linux
