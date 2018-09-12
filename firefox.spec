@@ -6,6 +6,7 @@
 %bcond_with	tests		# enable tests (whatever they check)
 %bcond_without	kerberos	# disable krb5 support
 %bcond_without	official	# official Firefox branding
+%bcond_with	lto		# build with link time optimization
 %bcond_with	pgo		# PGO-enabled build (requires working $DISPLAY == :100)
 %bcond_without	geckodriver	# WebDriver
 %bcond_without	gold		# use default linker instead of gold
@@ -16,6 +17,10 @@
 %bcond_with	clang		# build using Clang/LLVM
 %bcond_with	legacy_exts	# build with legacy extensions support
 
+%if %{with lto}
+%define		with_clang	1
+%undefine	with_gold
+%endif
 # On updating version, grab CVE links from:
 # https://www.mozilla.org/security/known-vulnerabilities/firefox.html
 # Release Notes:
@@ -282,6 +287,7 @@ BuildRequires:	libpng(APNG)-devel >= 0.10
 BuildRequires:	libpng-devel >= 2:1.6.34
 BuildRequires:	libstdc++-devel >= 6:4.4
 BuildRequires:	libvpx-devel >= 1.5.0
+%{?with_lto:BuildRequires:	lld}
 BuildRequires:	llvm-devel
 BuildRequires:	nspr-devel >= 1:%{nspr_ver}
 BuildRequires:	nss-devel >= 1:%{nss_ver}
@@ -2086,6 +2092,12 @@ ac_add_options --enable-default-toolkit=cairo-gtk3
 ac_add_options --enable-extensions=default
 %{?with_geckodriver:ac_add_options --enable-geckodriver}
 %{?with_gold:ac_add_options --enable-linker=gold}
+%if %{with lto}
+ac_add_options --disable-elf-hack
+ac_add_options --enable-lto
+%else
+ac_add_options --enable-elf-hack
+%endif
 ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
 ac_add_options --enable-startup-notification
