@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Firefox
-Name[pl]=Firefox
+Name=Firefox 60 ESR
+Name[pl]=Firefox 60 ESR
 GenericName=Web Browser
 GenericName[af]=Web Blaaier
 GenericName[ar]=متصفح ويب
@@ -70,8 +70,8 @@ GenericName[zh_TW]=網頁瀏覽器
 GenericName[zu]=Umcingi we-Web
 Comment=Browse the Web powered by Mozilla technology
 Comment[pl]=Przeglądarka WWW oparta o technologię Mozilli
-Exec=firefox %u
-Icon=firefox
+Exec=firefox60-esr %u
+Icon=firefox60-esr
 Terminal=false
 MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
 Type=Application

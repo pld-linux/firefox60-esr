@@ -1,7 +1,7 @@
 #!/bin/sh
 # based on script by (c) vip at linux.pl, wolf at pld-linux.org
 
-LIBDIR="@LIBDIR@/firefox"
+LIBDIR="@LIBDIR@/@NAME@"
 
 # copy profile from Iceweasel if its available and if no Firefox
 # profile exists
