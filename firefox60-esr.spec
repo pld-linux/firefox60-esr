@@ -388,20 +388,6 @@ Firefox jest przeglądarką WWW rozpowszechnianą zgodnie z ideami
 ruchu otwartego oprogramowania oraz tworzoną z myślą o zgodności ze
 standardami, wydajnością i przenośnością.
 
-%package -n gmp-api
-Summary:	GeckoMediaPlugins API header files
-Summary(pl.UTF-8):	Pliki nagłówkowe API GeckoMediaPlugins
-Group:		Development/Libraries
-URL:		https://wiki.mozilla.org/GeckoMediaPlugins
-# actually C++ compiler; STL is not even used
-Requires:	libstdc++-devel
-
-%description -n gmp-api
-GeckoMediaPlugins API header files.
-
-%description -n gmp-api -l pl.UTF-8
-Pliki nagłówkowe API GeckoMediaPlugins.
-
 %package lang-ach
 Summary:	Acoli resources for Firefox
 Summary(pl.UTF-8):	Pliki językowe aczoli dla Firefoksa
@@ -2142,9 +2128,7 @@ install -d \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_libdir}} \
 	$RPM_BUILD_ROOT%{_desktopdir} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}/browser \
-	$RPM_BUILD_ROOT%{_libdir}/%{name}/browser/plugins \
-	$RPM_BUILD_ROOT%{_includedir}/%{name} \
-	$RPM_BUILD_ROOT%{_pkgconfigdir}
+	$RPM_BUILD_ROOT%{_libdir}/%{name}/browser/plugins
 
 %browser_plugins_add_browser %{name} -p %{_libdir}/%{name}/browser/plugins
 
@@ -2205,10 +2189,6 @@ unset TMPDIR TMP || :
 rm -rf $HOME
 EOF
 chmod 755 $RPM_BUILD_ROOT%{_sbindir}/%{name}-chrome+xpcom-generate
-
-# GeckoMediaPlugin API headers
-install -d $RPM_BUILD_ROOT%{_includedir}
-cp -pr dom/media/gmp/gmp-api $RPM_BUILD_ROOT%{_includedir}
 
 for a in *.xpi; do
 	basename=$(basename $a .xpi)
@@ -2301,10 +2281,6 @@ fi
 %dir %{_libdir}/%{name}/gtk2
 %attr(755,root,root) %{_libdir}/%{name}/gtk2/libmozgtk.so
 %attr(755,root,root) %{_libdir}/%{name}/libmozgtk.so
-
-%files -n gmp-api
-%defattr(644,root,root,755)
-%{_includedir}/gmp-api
 
 %files lang-ach
 %defattr(644,root,root,755)
