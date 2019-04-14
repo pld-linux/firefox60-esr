@@ -245,6 +245,7 @@ Source192:	http://releases.mozilla.org/pub/firefox/releases/%{version}esr/linux-
 Source193:	http://releases.mozilla.org/pub/firefox/releases/%{version}esr/linux-i686/xpi/zh-TW.xpi
 # Source193-md5:	dba6a7acb0c58346bcd62f7c4596e6d3
 
+Patch0:		rust-1.33.patch
 Patch4:		%{_basename}-prefs.patch
 Patch5:		%{_basename}-pld-bookmarks.patch
 Patch6:		%{_basename}-no-subshell.patch
@@ -2013,6 +2014,7 @@ unpack() {
 %define __unzip unpack
 %setup -q -n %{_basename}-%{version}  %(seq -f '-a %g' 100 193 | xargs)
 
+%patch0 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
