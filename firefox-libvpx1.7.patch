@@ -1,0 +1,19 @@
+--- firefox-60.6.1/media/webrtc/trunk/webrtc/modules/video_coding/codecs/vp9/vp9_impl.cc.orig	2019-03-22 06:01:06.000000000 +0100
++++ firefox-60.6.1/media/webrtc/trunk/webrtc/modules/video_coding/codecs/vp9/vp9_impl.cc	2019-04-17 08:22:14.871654865 +0200
+@@ -855,7 +855,16 @@
+ 
+         int updated_buffer = settings.layer[layer_idx].upd_buf;
+         buffer_updated_at_frame_[updated_buffer] = frames_encoded_;
++#if VPX_ENCODER_ABI_VERSION < 14 /* libvpx < 1.7.0 */
+         sf_conf.frame_flags[layer_idx] = layer_flags;
++#else
++        sf_conf.update_last[layer_idx] = !(layer_flags & VP8_EFLAG_NO_UPD_LAST);
++        sf_conf.update_golden[layer_idx] = !(layer_flags & VP8_EFLAG_NO_UPD_GF);
++        sf_conf.update_alt_ref[layer_idx] = !(layer_flags & VP8_EFLAG_NO_UPD_ARF);
++        sf_conf.reference_last[layer_idx] = !(layer_flags & VP8_EFLAG_NO_REF_LAST);
++        sf_conf.reference_golden[layer_idx] = !(layer_flags & VP8_EFLAG_NO_REF_GF);
++        sf_conf.reference_alt_ref[layer_idx] = !(layer_flags & VP8_EFLAG_NO_REF_ARF);
++#endif
+       }
+     }
+   }
