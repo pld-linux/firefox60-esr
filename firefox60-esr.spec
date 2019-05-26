@@ -262,6 +262,7 @@ Patch7:		%{origname}-middle_click_paste.patch
 Patch8:		%{origname}-system-virtualenv.patch
 Patch9:		%{origname}-Disable-Firefox-Health-Report.patch
 Patch10:	system-cairo.patch
+Patch11:	ignore-stats-errors.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
@@ -2078,6 +2079,7 @@ unpack() {
 %patch8 -p2
 %patch9 -p1
 %{?with_system_cairo:%patch10 -p1}
+%patch11 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
 

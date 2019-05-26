@@ -1,0 +1,10 @@
+--- firefox-60.7.0/python/mozbuild/mozbuild/controller/building.py~	2019-05-14 21:13:24.000000000 +0200
++++ firefox-60.7.0/python/mozbuild/mozbuild/controller/building.py	2019-05-26 20:22:50.485588101 +0200
+@@ -322,6 +322,7 @@
+             self.log(logging.WARNING, 'build_resources_error',
+                 {'msg': str(e)},
+                 'Exception when writing resource usage file: {msg}')
++            pass
+ 
+     def _get_finder_cpu_usage(self):
+         """Obtain the CPU usage of the Finder app on OS X.
