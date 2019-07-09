@@ -104,3 +104,31 @@ diff --git a/servo/components/style/gecko/regen_atoms.py b/servo/components/styl
  #[cfg(feature = "gecko")]
  #[macro_export]
  macro_rules! property_name {
+--- firefox-60.8.0/servo/components/style_traits/values.rs.orig	2019-07-09 22:38:09.837119875 +0200
++++ firefox-60.8.0/servo/components/style_traits/values.rs	2019-07-09 22:40:59.863527104 +0200
+@@ -135,6 +135,7 @@
+     }
+ }
+ 
++/// dummy
+ #[macro_export]
+ macro_rules! serialize_function {
+     ($dest: expr, $name: ident($( $arg: expr, )+)) => {
+@@ -404,6 +405,7 @@
+ impl_to_css_for_predefined_type!(::cssparser::Color);
+ impl_to_css_for_predefined_type!(::cssparser::UnicodeRange);
+ 
++/// dummy
+ #[macro_export]
+ macro_rules! define_css_keyword_enum {
+     (pub enum $name:ident { $($variant:ident = $css:expr,)+ }) => {
+--- firefox-60.8.0/servo/components/style/gecko_string_cache/namespace.rs.orig	2019-07-09 22:53:36.849003819 +0200
++++ firefox-60.8.0/servo/components/style/gecko_string_cache/namespace.rs	2019-07-09 22:53:47.402265609 +0200
+@@ -11,6 +11,7 @@
+ use std::ops::Deref;
+ use string_cache::{Atom, WeakAtom};
+ 
++/// dummy
+ #[macro_export]
+ macro_rules! ns {
+     () => { $crate::string_cache::Namespace(atom!("")) };
