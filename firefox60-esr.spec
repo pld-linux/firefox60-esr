@@ -255,6 +255,7 @@ Source197:	http://releases.mozilla.org/pub/firefox/releases/%{lang_version}esr/l
 
 Patch0:		rust-1.33.patch
 Patch1:		%{origname}-libvpx1.7.patch
+Patch2:		glibc-2.30.patch
 Patch4:		%{origname}-prefs.patch
 Patch5:		%{origname}-pld-bookmarks.patch
 Patch6:		%{origname}-no-subshell.patch
@@ -2072,6 +2073,7 @@ unpack() {
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
