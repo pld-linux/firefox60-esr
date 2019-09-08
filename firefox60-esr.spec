@@ -2141,11 +2141,9 @@ ac_add_options --enable-default-toolkit=cairo-gtk3
 ac_add_options --enable-extensions=default
 %{?with_geckodriver:ac_add_options --enable-geckodriver}
 %{?with_gold:ac_add_options --enable-linker=gold}
-%if %{with lto}
 ac_add_options --disable-elf-hack
+%if %{with lto}
 ac_add_options --enable-lto
-%else
-ac_add_options --enable-elf-hack
 %endif
 ac_add_options --enable-readline
 %{?with_shared_js:ac_add_options --enable-shared-js}
