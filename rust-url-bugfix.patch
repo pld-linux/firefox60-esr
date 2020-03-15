@@ -1,0 +1,80 @@
+commit 2efa106431e6fb15b73478f67e37cb307bac2be6
+Author: Simon Sapin <simon.sapin@exyr.org>
+Date:   Wed Jul 4 22:18:36 2018 +0200
+
+    Fix a lifetime bug uncovered by NLL, thanks @lqd
+
+#diff --git a/Cargo.toml b/Cargo.toml
+#index 4d7ed8a..164be45 100644
+#--- a/Cargo.toml
+#+++ b/Cargo.toml
+#@@ -2,7 +2,7 @@
+# 
+# name = "url"
+# # When updating version, also modify html_root_url in the lib.rs
+#-version = "1.7.0"
+#+version = "1.7.1"
+# authors = ["The rust-url developers"]
+# 
+# description = "URL library for Rust, based on the WHATWG URL Standard"
+diff --git a/src/form_urlencoded.rs b/src/form_urlencoded.rs
+index 7ba8b4a..f378c9a 100644
+--- a/src/form_urlencoded.rs
++++ b/src/form_urlencoded.rs
+@@ -257,8 +257,16 @@ impl<'a> Target for &'a mut String {
+ // * `Serializer` keeps its target in a private field
+ // * Unlike in other `Target` impls, `UrlQuery::finished` does not return `Self`.
+ impl<'a> Target for ::UrlQuery<'a> {
+-    fn as_mut_string(&mut self) -> &mut String { &mut self.url.serialization }
+-    fn finish(self) -> &'a mut ::Url { self.url }
++    fn as_mut_string(&mut self) -> &mut String {
++        &mut self.url.as_mut().unwrap().serialization
++    }
++
++    fn finish(mut self) -> &'a mut ::Url {
++        let url = self.url.take().unwrap();
++        url.restore_already_parsed_fragment(self.fragment.take());
++        url
++    }
++
+     type Finished = &'a mut ::Url;
+ }
+ 
+diff --git a/src/lib.rs b/src/lib.rs
+index f24285f..4edd426 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1343,7 +1343,7 @@ impl Url {
+             self.serialization.push('?');
+         }
+ 
+-        let query = UrlQuery { url: self, fragment: fragment };
++        let query = UrlQuery { url: Some(self), fragment: fragment };
+         form_urlencoded::Serializer::for_suffix(query, query_start + "?".len())
+     }
+ 
+@@ -2423,13 +2423,15 @@ fn io_error<T>(reason: &str) -> io::Result<T> {
+ /// Implementation detail of `Url::query_pairs_mut`. Typically not used directly.
+ #[derive(Debug)]
+ pub struct UrlQuery<'a> {
+-    url: &'a mut Url,
++    url: Option<&'a mut Url>,
+     fragment: Option<String>,
+ }
+ 
+ impl<'a> Drop for UrlQuery<'a> {
+     fn drop(&mut self) {
+-        self.url.restore_already_parsed_fragment(self.fragment.take())
++        if let Some(url) = self.url.take() {
++            url.restore_already_parsed_fragment(self.fragment.take())
++        }
+     }
+ }
+ 
+--- url/.cargo-checksum.json.orig	2020-03-12 09:49:20.822032699 +0100
++++ url/.cargo-checksum.json	2020-03-12 11:53:38.228299131 +0100
+@@ -1 +1 @@
+-{"files":{".travis.yml":"890af214187ffcba4732acb2d1af30d7adb9aade0679e9fdb06baae363240b8e","Cargo.toml":"52e8e0a7014d3b0c654491184e9fc82f8c61ba7f51332e2b6a787330be42a301","LICENSE-APACHE":"a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2","LICENSE-MIT":"20c7855c364d57ea4c97889a5e8d98470a9952dade37bd9248b9a54431670e5e","Makefile":"bffd75d34654b2955d4f005f1a5e85c821c90becf1a8a52cbe10121972f43148","README.md":"eb3f4694003f408cbe3c7f3e9fbbc71241defb940cc55a816981f0f0f144c8eb","UPGRADING.md":"fbcc2d39bdf17db0745793db6626fcd5c909dddd4ce13b27566cfabece22c368","appveyor.yml":"c78486dbfbe6ebbf3d808afb9a19f7ec18c4704ce451c6305f0716999b70a1a6","docs/.nojekyll":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","docs/404.html":"f61e6271c1ea1aa113b64b356e994595fa548f0433f89948d747503ad22195cd","docs/index.html":"f61e6271c1ea1aa113b64b356e994595fa548f0433f89948d747503ad22195cd","github.png":"b432fd855efe7c430fe6a57ccf83935c1996f03a7cdc8d6e1b34154b8c43f6ec","rust-url-todo":"1192cee7b6cedf2133d97dc6074b593a1d19b0ee13fff6f28d6329855044e575","src/encoding.rs":"f3e109ca8ec5a9130da50cdfb3003530aedb6dd5a440f0790d76b71f6981119c","src/form_urlencoded.rs":"320418526c4564a4469581d426e7467bcefe504eecd098e1eb90a2663a75fd80","src/host.rs":"4c74946777d76e9b307604f8e24a3485fd0856b664450194e8b429e262cf410d","src/lib.rs":"894cc76c31357fb588292e990a87f4e951043e32ea3d9f38fddc145302d0b318","src/origin.rs":"6e4821eb9600a32ef54d05c8e1a7937f6d9b4dd1e3bda7f36c7988f6a2bef78b","src/parser.rs":"e379c9eb51cff977b9cef368ab64bcff7626e885b859772ab1bc76c9193e9fde","src/path_segments.rs":"7bd3142eaa568863ef44e2255c181239141f9eeee337f889b9ffaaeab4ca669d","src/quirks.rs":"fe6095104cf583053ab35d8a2a093a8581da083641e32d1c5acfe322a26c4bde","src/slicing.rs":"4e539886b23945a92094625f3e531a4bff40daa44240b5d19ee8577478c4f7fe","tests/data.rs":"50a110e475b1717fdaff6524be7d8916cb41a45461e0715f632ff54d0ce28886","tests/setters_tests.json":"ebcbdb52e9a4b5a565f8806d52ebc610d46a34df883e10b0be080d026468ff73","tests/unit.rs":"c0305ca991b2c03815aac2e69ef1c1792b087df92272a6196eb698b27625321f","tests/urltestdata.json":"df87028e1eaea4ef70cf1c1faaed2584e81a46b8b6cd90f50d47b77726ece41c"},"package":"fa35e768d4daf1d85733418a49fb42e10d7f633e394fccab4ab7aba897053fe2"}
+\ No newline at end of file
++{"files":{".travis.yml":"890af214187ffcba4732acb2d1af30d7adb9aade0679e9fdb06baae363240b8e","Cargo.toml":"52e8e0a7014d3b0c654491184e9fc82f8c61ba7f51332e2b6a787330be42a301","LICENSE-APACHE":"a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2","LICENSE-MIT":"20c7855c364d57ea4c97889a5e8d98470a9952dade37bd9248b9a54431670e5e","Makefile":"bffd75d34654b2955d4f005f1a5e85c821c90becf1a8a52cbe10121972f43148","README.md":"eb3f4694003f408cbe3c7f3e9fbbc71241defb940cc55a816981f0f0f144c8eb","UPGRADING.md":"fbcc2d39bdf17db0745793db6626fcd5c909dddd4ce13b27566cfabece22c368","appveyor.yml":"c78486dbfbe6ebbf3d808afb9a19f7ec18c4704ce451c6305f0716999b70a1a6","docs/.nojekyll":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","docs/404.html":"f61e6271c1ea1aa113b64b356e994595fa548f0433f89948d747503ad22195cd","docs/index.html":"f61e6271c1ea1aa113b64b356e994595fa548f0433f89948d747503ad22195cd","github.png":"b432fd855efe7c430fe6a57ccf83935c1996f03a7cdc8d6e1b34154b8c43f6ec","rust-url-todo":"1192cee7b6cedf2133d97dc6074b593a1d19b0ee13fff6f28d6329855044e575","src/encoding.rs":"f3e109ca8ec5a9130da50cdfb3003530aedb6dd5a440f0790d76b71f6981119c","src/form_urlencoded.rs":"d8c35e92375cafcd7e12c4f0d5374bab62aa1f333629d55b007a9c3d5c3cb615","src/host.rs":"4c74946777d76e9b307604f8e24a3485fd0856b664450194e8b429e262cf410d","src/lib.rs":"f132a35fdade0a52f1022792bb8a430dae1e50a34f5c05faeb84d386e7f50397","src/origin.rs":"6e4821eb9600a32ef54d05c8e1a7937f6d9b4dd1e3bda7f36c7988f6a2bef78b","src/parser.rs":"e379c9eb51cff977b9cef368ab64bcff7626e885b859772ab1bc76c9193e9fde","src/path_segments.rs":"7bd3142eaa568863ef44e2255c181239141f9eeee337f889b9ffaaeab4ca669d","src/quirks.rs":"fe6095104cf583053ab35d8a2a093a8581da083641e32d1c5acfe322a26c4bde","src/slicing.rs":"4e539886b23945a92094625f3e531a4bff40daa44240b5d19ee8577478c4f7fe","tests/data.rs":"50a110e475b1717fdaff6524be7d8916cb41a45461e0715f632ff54d0ce28886","tests/setters_tests.json":"ebcbdb52e9a4b5a565f8806d52ebc610d46a34df883e10b0be080d026468ff73","tests/unit.rs":"c0305ca991b2c03815aac2e69ef1c1792b087df92272a6196eb698b27625321f","tests/urltestdata.json":"df87028e1eaea4ef70cf1c1faaed2584e81a46b8b6cd90f50d47b77726ece41c"},"package":"fa35e768d4daf1d85733418a49fb42e10d7f633e394fccab4ab7aba897053fe2"}
+\ No newline at end of file

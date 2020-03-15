@@ -1,0 +1,16 @@
+--- firefox-60.9.0/old-configure.in.orig	2019-09-01 15:09:29.000000000 +0200
++++ firefox-60.9.0/old-configure.in	2020-03-12 20:02:48.849293176 +0100
+@@ -518,13 +518,6 @@
+                   AC_MSG_RESULT([no])
+                   LDFLAGS=$_SAVE_LDFLAGS)
+ 
+-    AC_MSG_CHECKING([for -z text option to ld])
+-    _SAVE_LDFLAGS=$LDFLAGS
+-    LDFLAGS="$LDFLAGS -Wl,-z,text"
+-    AC_TRY_LINK(,,AC_MSG_RESULT([yes]),
+-                  AC_MSG_RESULT([no])
+-                  LDFLAGS=$_SAVE_LDFLAGS)
+-
+     AC_MSG_CHECKING([for -z relro option to ld])
+     _SAVE_LDFLAGS=$LDFLAGS
+     LDFLAGS="$LDFLAGS -Wl,-z,relro"

@@ -256,6 +256,7 @@ Source197:	http://releases.mozilla.org/pub/firefox/releases/%{lang_version}esr/l
 Patch0:		rust-1.33.patch
 Patch1:		%{origname}-libvpx1.7.patch
 Patch2:		glibc-2.30.patch
+Patch3:		rust-url-bugfix.patch
 Patch4:		%{origname}-prefs.patch
 Patch5:		%{origname}-pld-bookmarks.patch
 Patch6:		%{origname}-no-subshell.patch
@@ -264,6 +265,8 @@ Patch8:		%{origname}-system-virtualenv.patch
 Patch9:		%{origname}-Disable-Firefox-Health-Report.patch
 Patch10:	system-cairo.patch
 Patch11:	ignore-stats-errors.patch
+Patch12:	%{origname}-noztext.patch
+Patch13:	rust-cssparser-bugfix.patch
 URL:		https://www.mozilla.org/firefox/
 BuildRequires:	OpenGL-devel
 BuildRequires:	alsa-lib-devel
@@ -2074,6 +2077,9 @@ unpack() {
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+cd third_party/rust/url
+%patch3 -p1
+cd ../../..
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
@@ -2082,6 +2088,10 @@ unpack() {
 %patch9 -p1
 %{?with_system_cairo:%patch10 -p1}
 %patch11 -p1
+%patch12 -p1
+cd third_party/rust/cssparser
+%patch13 -p1
+cd ../../..
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
 
