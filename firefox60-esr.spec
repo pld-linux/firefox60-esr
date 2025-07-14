@@ -2074,23 +2074,23 @@ unpack() {
 %define __unzip unpack
 %setup -q -n %{origname}-%{version}  %(seq -f '-a %g' 100 197 | xargs)
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 cd third_party/rust/url
-%patch3 -p1
+%patch -P3 -p1
 cd ../../..
-%patch4 -p1
-%patch5 -p1
-%patch6 -p2
-%patch7 -p1
-%patch8 -p2
-%patch9 -p1
+%patch -P4 -p1
+%patch -P5 -p1
+%patch -P6 -p2
+%patch -P7 -p1
+%patch -P8 -p2
+%patch -P9 -p1
 %{?with_system_cairo:%patch10 -p1}
-%patch11 -p1
-%patch12 -p1
+%patch -P11 -p1
+%patch -P12 -p1
 cd third_party/rust/cssparser
-%patch13 -p1
+%patch -P13 -p1
 cd ../../..
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' xpcom/typelib/xpt/tools/xpt.py xpcom/idl-parser/xpidl/xpidl.py
